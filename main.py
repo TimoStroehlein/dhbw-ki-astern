@@ -1,23 +1,8 @@
 import argparse
 import logging
-import csv
 
 from controller.FileController import FileController
-
-
-def read_file(import_path, export_path=None):
-    file_controller = FileController()
-
-    # Check import path is not valid, exit
-    if not file_controller.is_path_valid(import_path):
-        exit(2)
-
-    # Starting the import
-    logging.info('Importing data from %s...', import_path)
-    with open(import_path) as csv_file:
-        spam_reader = csv.reader(csv_file, delimiter=';')
-        for row in spam_reader:
-            print(', '.join(row))
+from controller.AStarController import AStartController
 
 
 def main():
@@ -57,10 +42,15 @@ def main():
 
     # Handle the import and export arguments
     if args.import_path:
+        links = []
+
         if args.export_path:
-            read_file(args.import_path, args.export_path)
+            links = FileController.read_file(args.import_path, args.export_path)
         else:
-            read_file(args.import_path)
+            links = FileController.read_file(args.import_path)
+
+        a_star_controller = AStartController(links)
+        a_star_controller.start_search()
 
 
 if __name__ == '__main__':
