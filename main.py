@@ -1,6 +1,7 @@
 import argparse
 import logging
 
+from model.Node import Node
 from controller.FileController import FileController
 from controller.AStarController import AStartController
 
@@ -45,11 +46,16 @@ def main():
         links = []
 
         if args.export_path:
-            links = FileController.read_file(args.import_path, args.export_path)
+            links = FileController.read_file(args.import_path, args.export_path, log_level=args.log_level)
         else:
-            links = FileController.read_file(args.import_path)
+            links = FileController.read_file(args.import_path, log_level=args.log_level)
 
-        a_star_controller = AStartController(links)
+        # Set the start node
+        start_node = Node(15, -4, -6)
+        dest_node = Node(0, 0, 0)        # End node is the center of the cube
+
+        # Calculate the path
+        a_star_controller = AStartController(links, start_node, dest_node)
         a_star_controller.start_search()
 
 
