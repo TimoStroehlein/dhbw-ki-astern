@@ -51,12 +51,15 @@ def main():
             links, nodes = file_controller.read_file(args.import_path, log_level=args.log_level)
 
         # Set the start node
-        start_node = Node(15, -4, 6)
-        dest_node = Node(0, 0, 0)        # End node is the center of the cube
+        start_node = Node((15, -4, 6))
+        dest_node = Node((0, 0, 0))     # End node is the center of the cube
 
         # Calculate the path
         a_star_controller = AStartController(links, nodes, start_node, dest_node)
-        a_star_controller.start_search()
+        if a_star_controller.start_search():
+            exit(0)
+        else:
+            exit(1)
 
 
 if __name__ == '__main__':
