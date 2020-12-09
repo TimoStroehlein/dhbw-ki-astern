@@ -60,6 +60,11 @@ class AStartController:
                     nodes.append(link.node1)
 
             # Get all possible neighbours on the same level and below, that could be opened with a tritanium blaster
+            neighbour_list = self.get_neighbors(current_node.position)
+            neighbour: Node
+            for neighbour in neighbour_list:
+                if neighbour not in nodes:
+                    nodes.append(neighbour)
 
             # Iterate through all children
             current_link: Link
@@ -76,16 +81,13 @@ class AStartController:
                     child_node.parent_node = current_node
 
                     # Check if the child node is already in the open list
-                    if any(child_node == open_node for open_node in open_list):
+                    if child_node in open_list:
                         continue
 
                     # Append the child node to the open list
                     open_list.append(child_node)
 
-    def g(self, link: Link, current_node: Node, child_node: Node):
-        # TODO: Implement blasting a hole in a wall or ground
-        # Blasting a hole in a wall with a tritanium-blaster costs 3 minutes, can be used in all directions expect up
-
+    def g(self, current_link: Link, current_node: Node, child_node: Node):
         # Determine whether the current or new g value is cheaper
         def is_cheaper(cost, tritanium_blaster_cost=0, energy_unit_cost=0):
             if child_node.g < current_node.g + cost:
@@ -103,11 +105,22 @@ class AStartController:
             else:
                 return True
 
+        # No link to the neighbor room, link can be blasted
+        # Blasting a hole in a wall with a tritanium-blaster costs 3 minutes, can be used in all directions expect up
+        if current_link is None:
+            if not is_cheaper(3):
+                return False
+            child_node.g = current_node.g + 3
+            child_node.regeneration_time = current_node.regeneration_time - 3
+            child_node.tritanium_blaster = current_node.tritanium_blaster - 1
+            child_node.energy_units = current_node.energy_units
+            child_node.parent_link_type = 'wall or ground blasted'
+
         # Path with or without a drone
-        if link.is_open:
+        elif current_link.is_open:
             # Destroying a drone costs 3 minutes and one energy unit
             # 5 minute regeneration time before a new drone can be fought
-            if link.is_sentinel:
+            if current_link.is_sentinel:
                 if current_node.energy_units == 0:
                     return False
                 # Check whether a regeneration is set or not, if so, take a brake
@@ -136,8 +149,8 @@ class AStartController:
                 child_node.energy_units = current_node.energy_units
                 child_node.parent_link_type = 'open'
 
-        # Costs 2 minutes
-        elif link.is_door:
+        # Door costs 2 minutes
+        elif current_link.is_door:
             if not is_cheaper(2):
                 return False
             child_node.g = current_node.g + 2
@@ -148,7 +161,7 @@ class AStartController:
 
         # Up the ladder costs 2 minutes
         # Down costs 1/2 minute
-        elif link.is_ladder:
+        elif current_link.is_ladder:
             # Check if the ladder has been went up or down
             if current_node.position[2] <= child_node.position[2]:
                 if not is_cheaper(2, energy_unit_cost=2):
@@ -181,3 +194,16 @@ class AStartController:
             path.append(current_node)
         # Return reversed path
         return path[::-1]
+
+    def get_neighbors(self, position):
+        neighbors = []
+        (x, y, z) = position
+        candidates = [(x - 1, y, z), (x + 1, y, z), (x, y - 1, z), (x, y + 1, z), (x, y, z - 1)]
+        for candidate in candidates:
+            try:
+                found_node = next(filter(lambda node: node.position == candidate, self.nodes), None)
+                if found_node:
+                    neighbors.append(found_node)
+            except IndexError:
+                pass
+        return neighbors
