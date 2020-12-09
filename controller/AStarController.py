@@ -150,7 +150,7 @@ class AStartController:
         # Down costs 1/2 minute
         elif link.is_ladder:
             # Check if the ladder has been went up or down
-            if current_node.z <= child_node.z:
+            if current_node.position[2] <= child_node.position[2]:
                 if not is_cheaper(2, energy_unit_cost=2):
                     return False
                 child_node.g = current_node.g + 2
@@ -170,8 +170,8 @@ class AStartController:
 
     # Estimate the cost of the cheapest path from the next node to the destination node
     def h(self, child_node: Node):
-        x1, y1, z1 = child_node.x, child_node.y, child_node.z
-        x2, y2, z2 = self.dest_node.x, self.dest_node.y, self.dest_node.z
+        (x1, y1, z1) = child_node.position
+        (x2, y2, z2) = self.dest_node.position
         child_node.h = abs(x1 - x2) + abs(y1 - y2) + abs(z1 - z2)
 
     def reconstruct_path(self, current_node: Node):

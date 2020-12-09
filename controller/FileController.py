@@ -26,8 +26,8 @@ class FileController:
                     continue
 
                 # Get the nodes
-                node1 = Node(int(row[0] or '0'), int(row[1] or '0'), int(row[2] or '0'))
-                node2 = Node(int(row[3] or '0'), int(row[4] or '0'), int(row[5] or '0'))
+                node1 = Node((int(row[0] or '0'), int(row[1] or '0'), int(row[2] or '0')))
+                node2 = Node((int(row[3] or '0'), int(row[4] or '0'), int(row[5] or '0')))
 
                 # Add the nodes, if they haven't been added yet
                 found_node = next((node for node in self.nodes if node1 == node), None)
@@ -43,7 +43,7 @@ class FileController:
 
                 # Add the link
                 self.links.append(Link(node1, node2, int(row[6] or '0'), int(row[7] or '0'),
-                                      int(row[8] or '0'), int(row[9] or '0')))
+                                  int(row[8] or '0'), int(row[9] or '0')))
 
         # Print the file if debug is enabled
         if log_level == logging.DEBUG:
@@ -55,8 +55,7 @@ class FileController:
     def print_file(self):
         for link in self.links:
             print('%s, %s, %d, %d, %d, %d' % (
-                (link.node1.x, link.node1.y, link.node1.z), (link.node2.x, link.node2.y, link.node2.z),
-                link.is_door, link.is_open, link.is_sentinel, link.is_ladder))
+                link.node1, link.node2, link.is_door, link.is_open, link.is_sentinel, link.is_ladder))
 
     @staticmethod
     def is_path_valid(path):

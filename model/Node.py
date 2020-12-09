@@ -2,10 +2,8 @@ import sys
 
 
 class Node:
-    def __init__(self, x, y, z):
-        self.x = x
-        self.y = y
-        self.z = z
+    def __init__(self, position):
+        self.position = position
         self.f = sys.maxsize    # Total cost of the node: f = g + h
         self.g = sys.maxsize    # Cost of from the start node to this node
         self.h = sys.maxsize    # Estimate the cost from the current node to the destination node
@@ -29,16 +27,16 @@ class Node:
     def __eq__(self, other):
         if not isinstance(other, Node):
             return NotImplemented
-        return self.x == other.x and self.y == other.y and self.z == other.z
+        return self.position == other.position
 
     # Sort nodes
     def __lt__(self, other):
         return self.f < other.f
 
     def __str__(self):
-        return '(%d, %d, %d),\tf: %f,\tg: %f,\th: %f,\ttritanium_blaster: %d,\tenergy_units: %d,'\
+        return '%s,\tf: %f,\tg: %f,\th: %f,\ttritanium_blaster: %d,\tenergy_units: %d,'\
                 '\tregeneration_time: %f,\tlink_type: %s'\
-                % (self.x, self.y, self.z, self.f, self.g, self.h, self.tritanium_blaster, self.energy_units,
+                % (self.position, self.f, self.g, self.h, self.tritanium_blaster, self.energy_units,
                     self.regeneration_time, self.parent_link_type)
 
     def __repr__(self):
