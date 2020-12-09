@@ -7,16 +7,14 @@ from model.Node import Node
 
 
 class FileController:
-    links = []
-    nodes = []
+    def __init__(self):
+        self.links = []
+        self.nodes = []
 
-    @classmethod
-    def read_file(cls, import_path, export_path=None, log_level=None):
+    def read_file(self, import_path, export_path=None, log_level=None):
         # Check import path is not valid, exit
-        if not cls.is_path_valid(import_path):
+        if not self.is_path_valid(import_path):
             exit(2)
-
-        counter = 0
 
         # Starting the import
         logging.info('Importing data from %s...', import_path)
@@ -32,37 +30,36 @@ class FileController:
                 node2 = Node(int(row[3] or '0'), int(row[4] or '0'), int(row[5] or '0'))
 
                 # Add the nodes, if they haven't been added yet
-                found_node = next((node for node in cls.nodes if node1 == node), None)
+                found_node = next((node for node in self.nodes if node1 == node), None)
                 if found_node:
                     node1 = found_node
                 else:
-                    cls.nodes.append(node1)
-                found_node = next((node for node in cls.nodes if node2 == node), None)
+                    self.nodes.append(node1)
+                found_node = next((node for node in self.nodes if node2 == node), None)
                 if found_node:
                     node2 = found_node
                 else:
-                    cls.nodes.append(node2)
+                    self.nodes.append(node2)
 
                 # Add the link
-                cls.links.append(Link(node1, node2, int(row[6] or '0'), int(row[7] or '0'),
+                self.links.append(Link(node1, node2, int(row[6] or '0'), int(row[7] or '0'),
                                       int(row[8] or '0'), int(row[9] or '0')))
 
         # Print the file if debug is enabled
         if log_level == logging.DEBUG:
             logging.debug('Data imported:')
-            cls.print_file()
+            self.print_file()
 
-        return cls.links, cls.nodes
+        return self.links, self.nodes
 
-    @classmethod
-    def print_file(cls):
-        for link in cls.links:
+    def print_file(self):
+        for link in self.links:
             print('%s, %s, %d, %d, %d, %d' % (
                 (link.node1.x, link.node1.y, link.node1.z), (link.node2.x, link.node2.y, link.node2.z),
                 link.is_door, link.is_open, link.is_sentinel, link.is_ladder))
 
-    @classmethod
-    def is_path_valid(cls, path):
+    @staticmethod
+    def is_path_valid(path):
         """
         Checks if the passed path is valid
         :param path: The path to check

@@ -43,13 +43,12 @@ def main():
 
     # Handle the import and export arguments
     if args.import_path:
-        links = []
-        nodes = []
-
+        # Read the data from the csv file
+        file_controller = FileController()
         if args.export_path:
-            links, nodes = FileController.read_file(args.import_path, args.export_path, log_level=args.log_level)
+            links, nodes = file_controller.read_file(args.import_path, args.export_path, log_level=args.log_level)
         else:
-            links, nodes = FileController.read_file(args.import_path, log_level=args.log_level)
+            links, nodes = file_controller.read_file(args.import_path, log_level=args.log_level)
 
         # Set the start node
         start_node = Node(15, -4, 6)

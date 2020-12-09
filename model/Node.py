@@ -1,11 +1,14 @@
+import sys
+
+
 class Node:
     def __init__(self, x, y, z):
         self.x = x
         self.y = y
         self.z = z
-        self.f = 0     # Total cost of the node: f = g + h
-        self.g = 0     # Cost of from the start node to this node
-        self.h = 0     # Estimate the cost from the current node to the destination node
+        self.f = sys.maxsize    # Total cost of the node: f = g + h
+        self.g = sys.maxsize    # Cost of from the start node to this node
+        self.h = sys.maxsize    # Estimate the cost from the current node to the destination node
         self.parent_node = None         # Parent node used for cheapest path
         self.tritanium_blaster = 0      # Used to open a wall/ ground and destroy the vinculum faster
         self.energy_units = 0           # Used to fight drones
