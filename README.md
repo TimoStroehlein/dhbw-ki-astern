@@ -1,6 +1,7 @@
 # dhbw-ki-astern
 
 ![Python Version][python-image]
+![CodeInspection][code-inspection]
 
 > Eine Konsolenanwendung, welche mithilfe des A*-Algorithmus den schnellsten Weg zeigt, die zentrale Koordinatin der 
 > Borg im Borg Kubus zu zerstören. :robot:
@@ -30,4 +31,5 @@ Implementiert:
 - docs für Dokumentation
 
 <!--Image Resources-->
-[python-image]: https://img.shields.io/badge/python-v3.8.5+-blue?style=flat-square&logo=python
+[python-image]: https://img.shields.io/badge/python-v3.8.5+-blue?logo=python
+[code-inspection]: https://github.com/TimoStroehlein/dhbw-ki-astern/workflows/CI/badge.svg

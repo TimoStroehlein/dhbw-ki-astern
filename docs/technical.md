@@ -21,3 +21,6 @@ Lediglich die Modelle, also die zentralen Objekte, sind von Anfang an definiert.
 ## Programmstruktur
 ## Dependencies
 ## Funktionen und Methoden
+
+Alle Funktionen, Klassenmethoden und Klassen sind inline im Code mit Docstrings dokumentiert. Dies ermöglicht einen 
+Export in ein HTML-Dokument, sollte es benötigt sein.
