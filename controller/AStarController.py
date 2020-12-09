@@ -42,9 +42,10 @@ class AStartController:
                 print('Destination reached, cost: %f' % current_node.f)
                 node: Node
                 for node in path:
-                    print('(%s),  \tf: %f,\tg: %f,\th: %f,\ttritanium_blaster: %d,\tenergy_units: %d, \tlink_type: %s'
+                    print('(%s),  \tf: %f,\tg: %f,\th: %f,\ttritanium_blaster: %d,\tenergy_units: %d,'
+                          '\tregeneration_time: %f,\tlink_type: %s'
                           % (str(node), node.f, node.g, node.h, node.tritanium_blaster, node.energy_units,
-                             node.parent_link_type))
+                             node.regeneration_time, node.parent_link_type))
                 exit(0)
 
             # Pop current node off the open list and add it to the closed list
@@ -104,15 +105,38 @@ class AStartController:
             else:
                 return True
 
-        # No obstacle, costs 1 minute
+        # Path with or without a drone
         if link.is_open:
-            if not is_cheaper(1):
-                return False
-            child_node.g = current_node.g + 1
-            child_node.regeneration_time = current_node.regeneration_time - 1
-            child_node.tritanium_blaster = current_node.tritanium_blaster
-            child_node.energy_units = current_node.energy_units
-            child_node.parent_link_type = 'open'
+            # Destroying a drone costs 3 minutes and one energy unit
+            # 5 minute regeneration time before a new drone can be fought
+            if link.is_sentinel:
+                if current_node.energy_units == 0:
+                    return False
+                # Check whether a regeneration is set or not, if so, take a brake
+                # A 1 minute Break can always be used and repeated
+                if current_node.regeneration_time == 0:
+                    if not is_cheaper(3, energy_unit_cost=1):
+                        return False
+                    child_node.g = current_node.g + 3
+                    child_node.parent_link_type = 'drone'
+                else:
+                    if not is_cheaper(3 + current_node.regeneration_time, energy_unit_cost=1):
+                        return False
+                    child_node.g = current_node.g + 3 + current_node.regeneration_time
+                    child_node.parent_link_type = 'drone & %f minutes regeneration' % current_node.regeneration_time
+
+                child_node.energy_units = current_node.energy_units - 1
+                child_node.regeneration_time = 5
+                child_node.tritanium_blaster = current_node.tritanium_blaster
+            # No obstacle, costs 1 minute
+            else:
+                if not is_cheaper(1):
+                    return False
+                child_node.g = current_node.g + 1
+                child_node.regeneration_time = current_node.regeneration_time - 1
+                child_node.tritanium_blaster = current_node.tritanium_blaster
+                child_node.energy_units = current_node.energy_units
+                child_node.parent_link_type = 'open'
 
         # Costs 2 minutes
         elif link.is_door:
@@ -123,25 +147,6 @@ class AStartController:
             child_node.tritanium_blaster = current_node.tritanium_blaster
             child_node.energy_units = current_node.energy_units
             child_node.parent_link_type = 'door'
-
-        # Destroying a drone costs 3 minutes and one energy unit
-        # 5 minute regeneration time before a new drone can be fought
-        elif link.is_sentinel and current_node.energy_units > 0:
-            # Check whether a regeneration is set or not, if so, take a brake
-            # A 1 minute Break can always be used and repeated
-            if current_node.regeneration_time == 0:
-                if not is_cheaper(3, energy_unit_cost=1):
-                    return False
-                child_node.g = current_node.g + 3
-            else:
-                if not is_cheaper(3 + current_node.regeneration_time, energy_unit_cost=1):
-                    return False
-                child_node.g = current_node.g + 3 + current_node.regeneration_time
-
-            child_node.energy_units = current_node.energy_units - 1
-            child_node.regeneration_time = 5
-            child_node.tritanium_blaster = current_node.tritanium_blaster
-            child_node.parent_link_type = 'drone'
 
         # Up the ladder costs 2 minutes
         # Down costs 1/2 minute

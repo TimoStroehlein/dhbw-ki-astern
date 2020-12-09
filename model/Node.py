@@ -13,18 +13,18 @@ class Node:
         self.parent_link_type = None
         self.tritanium_blaster = 0      # Used to open a wall/ ground and destroy the vinculum faster
         self.energy_units = 0           # Used to fight drones
-        self.regeneration_time = 0      # 5 minutes regeneration time after fighting a drone
+        self._regeneration_time = 0      # 5 minutes regeneration time after fighting a drone
 
     @property
-    def _regeneration_time(self):
-        return self.regeneration_time
+    def regeneration_time(self):
+        return self._regeneration_time
 
-    @_regeneration_time.setter
-    def _regeneration_time(self, value):
+    @regeneration_time.setter
+    def regeneration_time(self, value):
         if value < 0:
-            self.regeneration_time = 0
+            self._regeneration_time = 0
         else:
-            self.regeneration_time = value
+            self._regeneration_time = value
 
     def __eq__(self, other):
         if not isinstance(other, Node):
