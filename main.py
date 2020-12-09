@@ -56,7 +56,10 @@ def main():
 
         # Calculate the path
         a_star_controller = AStartController(links, nodes, start_node, dest_node)
-        a_star_controller.start_search()
+        if a_star_controller.start_search():
+            exit(0)
+        else:
+            exit(1)
 
 
 if __name__ == '__main__':

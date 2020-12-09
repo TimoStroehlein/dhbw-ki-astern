@@ -25,19 +25,23 @@ class Node:
             self._regeneration_time = value
 
     def __eq__(self, other):
+        """ Return whether the nodes are equal """
         if not isinstance(other, Node):
             return NotImplemented
         return self.position == other.position
 
-    # Sort nodes
     def __lt__(self, other):
+        """ Return the lower node, used to sort nodes """
         return self.f < other.f
 
+    #
     def __str__(self):
+        """ Return object as string """
         return '%s,\tf: %f,\tg: %f,\th: %f,\ttritanium_blaster: %d,\tenergy_units: %d,'\
                 '\tregeneration_time: %f,\tlink_type: %s'\
                 % (self.position, self.f, self.g, self.h, self.tritanium_blaster, self.energy_units,
                     self.regeneration_time, self.parent_link_type)
 
     def __repr__(self):
+        """ Returns a object representation as string """
         return str(self)

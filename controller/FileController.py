@@ -12,6 +12,13 @@ class FileController:
         self.nodes = []
 
     def read_file(self, import_path, export_path=None, log_level=None):
+        """
+        Read the csv file from the given import path.
+        :param import_path: Path to the csv file.
+        :param export_path: Path to the files where the result should be stored,
+        :param log_level: Level of logging, either debug or info
+        :return: Links and nodes from the csv file
+        """
         # Check import path is not valid, exit
         if not self.is_path_valid(import_path):
             exit(2)
@@ -53,13 +60,15 @@ class FileController:
         return self.links, self.nodes
 
     def print_file(self):
+        """ Print the file to the console """
         for link in self.links:
             print('%s, %s, %d, %d, %d, %d' % (
                 link.node1, link.node2, link.is_door, link.is_open, link.is_sentinel, link.is_ladder))
 
     @staticmethod
     def is_path_valid(path):
-        """Checks if the passed path is valid.
+        """
+        Checks if the passed path is valid.
         :param path: The path to check.
         :return: Boolean: True on valid, false on invalid.
         """

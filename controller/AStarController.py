@@ -12,6 +12,10 @@ class AStartController:
         self.dest_node = dest_node
 
     def start_search(self):
+        """
+        Start the A* search algorithm.
+        :return: Successful or not successful
+        """
         # Initialization
         self.start_node.g = 0
         self.h(self.start_node)
@@ -43,10 +47,10 @@ class AStartController:
 
                 # Reconstruct the path
                 path = self.reconstruct_path(current_node)
-                print('Destination reached, cost: %f' % current_node.f)
                 for node in path:
                     print(node)
-                exit(0)
+                print('Destination reached, cost: %f' % current_node.f)
+                return True
 
             # Get all links to the child nodes
             links = []
@@ -87,7 +91,16 @@ class AStartController:
                     # Append the child node to the open list
                     open_list.append(child_node)
 
+        return False
+
     def g(self, current_link: Link, current_node: Node, child_node: Node):
+        """
+        Calculate the cost/ distance from start to the child node.
+        :param current_link: Current link from the current node to the child node
+        :param current_node: Current parent node
+        :param child_node: Child node of the current node
+        :return: Whether the g score could be set or not
+        """
         # Determine whether the current or new g value is cheaper
         def is_cheaper(cost, tritanium_blaster_cost=0, energy_unit_cost=0):
             if child_node.g < current_node.g + cost:
@@ -121,6 +134,7 @@ class AStartController:
             # Destroying a drone costs 3 minutes and one energy unit
             # 5 minute regeneration time before a new drone can be fought
             if current_link.is_sentinel:
+                # Check if any energy units are left
                 if current_node.energy_units == 0:
                     return False
                 # Check whether a regeneration is set or not, if so, take a brake
@@ -181,13 +195,22 @@ class AStartController:
 
         return True
 
-    # Estimate the cost of the cheapest path from the next node to the destination node
     def h(self, child_node: Node):
+        """
+        Estimate the cost of the cheapest path from the next node to the destination node.
+        Calculate the heuristic.
+        :param child_node: Child node from where the heuristic should be calculated
+        """
         (x1, y1, z1) = child_node.position
         (x2, y2, z2) = self.dest_node.position
         child_node.h = abs(x1 - x2) + abs(y1 - y2) + abs(z1 - z2)
 
     def reconstruct_path(self, current_node: Node):
+        """
+        Reconstruct the cheapest path with backtracking.
+        :param current_node: Current node from where the path should be backtracked
+        :return: Reversed path
+        """
         path = [current_node]
         while current_node != self.start_node:
             current_node = current_node.parent_node
@@ -196,6 +219,11 @@ class AStartController:
         return path[::-1]
 
     def get_neighbors(self, position):
+        """
+        Get all neighbours of the current room, also those without a link.
+        :param position: Tuple position of the node
+        :return: Neighbor of the node
+        """
         neighbors = []
         (x, y, z) = position
         candidates = [(x - 1, y, z), (x + 1, y, z), (x, y - 1, z), (x, y + 1, z), (x, y, z - 1)]
