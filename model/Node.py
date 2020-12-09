@@ -6,8 +6,21 @@ class Node:
         self.f = 0     # Total cost of the node: f = g + h
         self.g = 0     # Cost of from the start node to this node
         self.h = 0     # Estimate the cost from the current node to the destination node
-        self.tritanium_blaster = 0     # Used to open a wall/ ground and destroy the vinculum faster
-        self.energy_units = 0          # Used to fight drones
+        self.parent_node = None         # Parent node used for cheapest path
+        self.tritanium_blaster = 0      # Used to open a wall/ ground and destroy the vinculum faster
+        self.energy_units = 0           # Used to fight drones
+        self.regeneration_time = 0      # 5 minutes regeneration time after fighting a drone
+
+    @property
+    def _regeneration_time(self):
+        return self.regeneration_time
+
+    @_regeneration_time.setter
+    def _regeneration_time(self, value):
+        if value < 0:
+            self.regeneration_time = 0
+        else:
+            self.regeneration_time = value
 
     def __eq__(self, other):
         if not isinstance(other, Node):
