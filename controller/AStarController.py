@@ -13,7 +13,9 @@ class AStartController:
 
     def start_search(self):
         # Initialization
-        self.start_node.f = self.start_node.g = self.start_node.h = 0
+        self.start_node.g = 0
+        self.h(self.start_node)
+        self.start_node.f = self.start_node.g + self.start_node.h
         self.start_node.tritanium_blaster = 12
         self.start_node.energy_units = 12
         open_list = [self.start_node]  # Open list, contains the start node at the beginning
@@ -27,14 +29,22 @@ class AStartController:
             # Finish if the current node is the destination node
             if current_node == self.dest_node:
                 # Destroying the vinculum costs 5 minutes, with a tritanium-blaster 1 minute
-                cost = 1 if current_node.tritanium_blaster >= 1 else 5
-                current_node.g = current_node.g + cost
-                current_node.f = current_node.g + current_node.h
+                if current_node.tritanium_blaster >= 1:
+                    current_node.g = current_node.g + 1
+                    current_node.f = current_node.g + current_node.h
+                    current_node.tritanium_blaster = current_node.tritanium_blaster - 1
+                else:
+                    current_node.g = current_node.g + 5
+                    current_node.f = current_node.g + current_node.h
+
                 # Reconstruct the path
                 path = self.reconstruct_path(current_node)
-                print('Destination reached, cost: %d' % current_node.f)
+                print('Destination reached, cost: %f' % current_node.f)
+                node: Node
                 for node in path:
-                    print(node)
+                    print('(%s),  \tf: %f,\tg: %f,\th: %f,\ttritanium_blaster: %d,\tenergy_units: %d, \tlink_type: %s'
+                          % (str(node), node.f, node.g, node.h, node.tritanium_blaster, node.energy_units,
+                             node.parent_link_type))
                 exit(0)
 
             # Pop current node off the open list and add it to the closed list
@@ -100,6 +110,9 @@ class AStartController:
                 return False
             child_node.g = current_node.g + 1
             child_node.regeneration_time = current_node.regeneration_time - 1
+            child_node.tritanium_blaster = current_node.tritanium_blaster
+            child_node.energy_units = current_node.energy_units
+            child_node.parent_link_type = 'open'
 
         # Costs 2 minutes
         elif link.is_door:
@@ -107,6 +120,9 @@ class AStartController:
                 return False
             child_node.g = current_node.g + 2
             child_node.regeneration_time = current_node.regeneration_time - 2
+            child_node.tritanium_blaster = current_node.tritanium_blaster
+            child_node.energy_units = current_node.energy_units
+            child_node.parent_link_type = 'door'
 
         # Destroying a drone costs 3 minutes and one energy unit
         # 5 minute regeneration time before a new drone can be fought
@@ -117,14 +133,15 @@ class AStartController:
                 if not is_cheaper(3, energy_unit_cost=1):
                     return False
                 child_node.g = current_node.g + 3
-                child_node.energy_units = current_node.energy_units - 1
-                child_node.regeneration_time = 5
             else:
-                if not is_cheaper(3 + current_node.regeneration_tim, energy_unit_cost=1):
+                if not is_cheaper(3 + current_node.regeneration_time, energy_unit_cost=1):
                     return False
                 child_node.g = current_node.g + 3 + current_node.regeneration_time
-                child_node.energy_units = current_node.energy_units - 1
-                child_node.regeneration_time = 5
+
+            child_node.energy_units = current_node.energy_units - 1
+            child_node.regeneration_time = 5
+            child_node.tritanium_blaster = current_node.tritanium_blaster
+            child_node.parent_link_type = 'drone'
 
         # Up the ladder costs 2 minutes
         # Down costs 1/2 minute
@@ -135,11 +152,16 @@ class AStartController:
                     return False
                 child_node.g = current_node.g + 2
                 child_node.regeneration_time = current_node.regeneration_time - 2
+                child_node.parent_link_type = 'ladder up'
             else:
                 if not is_cheaper(0.5, energy_unit_cost=2):
                     return False
                 child_node.g = current_node.g + 0.5
                 child_node.regeneration_time = current_node.regeneration_time - 0.5
+                child_node.parent_link_type = 'ladder down'
+
+            child_node.tritanium_blaster = current_node.tritanium_blaster
+            child_node.energy_units = current_node.energy_units
 
         return True
 
@@ -150,9 +172,9 @@ class AStartController:
         child_node.h = abs(x1 - x2) + abs(y1 - y2) + abs(z1 - z2)
 
     def reconstruct_path(self, current_node: Node):
-        path = [str(current_node)]
+        path = [current_node]
         while current_node != self.start_node:
             current_node = current_node.parent_node
-            path.append(str(current_node))
+            path.append(current_node)
         # Return reversed path
         return path[::-1]

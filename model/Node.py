@@ -10,6 +10,7 @@ class Node:
         self.g = sys.maxsize    # Cost of from the start node to this node
         self.h = sys.maxsize    # Estimate the cost from the current node to the destination node
         self.parent_node = None         # Parent node used for cheapest path
+        self.parent_link_type = None
         self.tritanium_blaster = 0      # Used to open a wall/ ground and destroy the vinculum faster
         self.energy_units = 0           # Used to fight drones
         self.regeneration_time = 0      # 5 minutes regeneration time after fighting a drone
