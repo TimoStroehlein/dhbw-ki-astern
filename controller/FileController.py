@@ -60,10 +60,9 @@ class FileController:
 
     @staticmethod
     def is_path_valid(path):
-        """
-        Checks if the passed path is valid
-        :param path: The path to check
-        :return: Boolean: True on valid, false on invalid
+        """Checks if the passed path is valid.
+        :param path: The path to check.
+        :return: Boolean: True on valid, false on invalid.
         """
         # If path is empty, it is not a valid path
         if path is None:

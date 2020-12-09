@@ -23,8 +23,12 @@ class AStartController:
 
         # Iterate through all nodes until every node has been visited or the destination node has not been reached
         while open_list:
-            # Get the current node
-            current_node = open_list[0]
+            # Sort the open list to get the lowest f score node first
+            open_list.sort()
+
+            # Pop current node off the open list and add it to the closed list
+            current_node = open_list.pop(0)
+            closed_list.append(current_node)
 
             # Finish if the current node is the destination node
             if current_node == self.dest_node:
@@ -40,17 +44,9 @@ class AStartController:
                 # Reconstruct the path
                 path = self.reconstruct_path(current_node)
                 print('Destination reached, cost: %f' % current_node.f)
-                node: Node
                 for node in path:
-                    print('(%s),  \tf: %f,\tg: %f,\th: %f,\ttritanium_blaster: %d,\tenergy_units: %d,'
-                          '\tregeneration_time: %f,\tlink_type: %s'
-                          % (str(node), node.f, node.g, node.h, node.tritanium_blaster, node.energy_units,
-                             node.regeneration_time, node.parent_link_type))
+                    print(node)
                 exit(0)
-
-            # Pop current node off the open list and add it to the closed list
-            open_list.pop(0)
-            closed_list.append(current_node)
 
             # Get all links to the child nodes
             links = []
@@ -62,6 +58,8 @@ class AStartController:
                 elif link.node2 == current_node:
                     links.append(link)
                     nodes.append(link.node1)
+
+            # Get all possible neighbours on the same level and below, that could be opened with a tritanium blaster
 
             # Iterate through all children
             current_link: Link

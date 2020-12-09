@@ -31,5 +31,15 @@ class Node:
             return NotImplemented
         return self.x == other.x and self.y == other.y and self.z == other.z
 
+    # Sort nodes
+    def __lt__(self, other):
+        return self.f < other.f
+
     def __str__(self):
-        return '%d, %d, %d' % (self.x, self.y, self.z)
+        return '(%d, %d, %d),\tf: %f,\tg: %f,\th: %f,\ttritanium_blaster: %d,\tenergy_units: %d,'\
+                '\tregeneration_time: %f,\tlink_type: %s'\
+                % (self.x, self.y, self.z, self.f, self.g, self.h, self.tritanium_blaster, self.energy_units,
+                    self.regeneration_time, self.parent_link_type)
+
+    def __repr__(self):
+        return str(self)
