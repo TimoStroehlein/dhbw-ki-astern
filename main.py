@@ -49,7 +49,7 @@ def start(args):
     """
     # Read the data from the csv file
     file_controller = FileController()
-    links, nodes = file_controller.import_file(args.import_path, log_level=args.log_level)
+    links, nodes = file_controller.import_file(args.import_path)
 
     # Set the start node
     start_node = Node((15, -4, 6))
@@ -62,7 +62,7 @@ def start(args):
     if cheapest_path:
         logging.info('Cheapest path successfully found!')
         if args.export_path:
-            file_controller.export_file(args.export_path, cheapest_path, args.log_level)
+            file_controller.export_file(args.export_path, cheapest_path)
         sys.exit(0)
     else:
         logging.fatal('Cheapest path could not be found.')

@@ -15,11 +15,10 @@ class FileController:
         self.links = []
         self.nodes = []
 
-    def import_file(self, import_path, log_level=None):
+    def import_file(self, import_path):
         """
         Read the csv file from the given import path.
         :param import_path: Path to the csv file.
-        :param log_level: Level of logging, either debug or info.
         :return: Links and nodes from the csv file.
         """
         # If the import path is not valid, exit
@@ -55,22 +54,21 @@ class FileController:
         logging.info('Successfully imported data from %s!', import_path)
 
         # Print the file if debug is enabled
-        self.print_file(log_level)
+        self.print_file()
         return self.links, self.nodes
 
-    def print_file(self, log_level):
+    def print_file(self):
         """ Print the file to the console """
         logging.debug('Data imported:')
         for link in self.links:
             logging.debug(str(link))
 
     @staticmethod
-    def export_file(export_path, cheapest_path: [], log_level=None):
+    def export_file(export_path, cheapest_path: []):
         """
         Export the result to a given file.
         :param export_path: Path to the file, where the result should be stored.
         :param cheapest_path: Cheapest path from the start to the destination node.
-        :param log_level: Level of logging, either debug or info.
         """
         logging.info('Exporting result to: %s' % export_path)
 
@@ -82,8 +80,7 @@ class FileController:
 
         logging.info('Result successfully exported!')
 
-    @staticmethod
-    def is_path_valid(path):
+    def is_path_valid(self, path):
         """
         Checks if the passed path is valid.
         :param path: The path to check.
