@@ -9,9 +9,7 @@ from controller.AStarController import AStartController
 
 def main():
     # Argument parser that handles the cli arguments
-    parser = argparse.ArgumentParser(
-        description='A program to to find the shortest path with A*.'
-    )
+    parser = argparse.ArgumentParser(description='A program to to find the shortest path with A*.')
 
     # Each argument is handled differently
     parser.add_argument("-v", "--verbose",
@@ -36,37 +34,46 @@ def main():
 
     # Parse all passed arguments
     args = parser.parse_args()
-
     # Handle the log level
     logging.basicConfig(format='[%(levelname)s] %(message)s', level=args.log_level)
     if args.log_level == logging.DEBUG:
         logging.warning("Running in debug mode! Console outputs may be large.")
 
-    # Handle the import and export arguments
-    if args.import_path:
-        # Read the data from the csv file
-        file_controller = FileController()
-        links, nodes = file_controller.import_file(args.import_path, log_level=args.log_level)
+    # Start the import and path calculation
+    start(args)
 
-        # Set the start node
-        start_node = Node((15, -4, 6))
-        dest_node = Node((0, 0, 0))     # End node is the center of the cube
 
-        # Calculate the path
-        a_star_controller = AStartController(links, nodes, start_node, dest_node)
+def start(args):
+    """
+    Start the import and path calculation.
+    """
+    if not args.import_path:
+        print('No import path with the \'-i\' argument has been set')
+        exit(1)
+
+    # Read the data from the csv file
+    file_controller = FileController()
+    links, nodes = file_controller.import_file(args.import_path, log_level=args.log_level)
+
+    # Set the start node
+    start_node = Node((15, -4, 6))
+    dest_node = Node((0, 0, 0))  # End node is the center of the cube
+
+    # Calculate the path
+    a_star_controller = AStartController(links, nodes, start_node, dest_node)
+    if args.log_level == logging.INFO or args.log_level == logging.DEBUG:
+        logging.info('Starting path search...')
+    cheapest_path = a_star_controller.search_path(args.log_level)
+    if cheapest_path:
         if args.log_level == logging.INFO or args.log_level == logging.DEBUG:
-            logging.info('Starting path search...')
-        cheapest_path = a_star_controller.search_path(args.log_level)
-        if cheapest_path:
-            if args.log_level == logging.INFO or args.log_level == logging.DEBUG:
-                logging.info('Cheapest path successfully found!')
-            if args.export_path:
-                file_controller.export_file(args.export_path, cheapest_path, args.log_level)
-            sys.exit(0)
-        else:
-            if args.log_level == logging.INFO or args.log_level == logging.DEBUG:
-                logging.info('Cheapest path could not be found.')
-            sys.exit(1)
+            logging.info('Cheapest path successfully found!')
+        if args.export_path:
+            file_controller.export_file(args.export_path, cheapest_path, args.log_level)
+        sys.exit(0)
+    else:
+        if args.log_level == logging.INFO or args.log_level == logging.DEBUG:
+            logging.info('Cheapest path could not be found.')
+        sys.exit(1)
 
 
 if __name__ == '__main__':

@@ -22,7 +22,7 @@ class FileController:
         :param log_level: Level of logging, either debug or info.
         :return: Links and nodes from the csv file.
         """
-        # Check import path is not valid, exit
+        # If the import path is not valid, exit
         if not self.is_path_valid(import_path):
             sys.exit(2)
 
@@ -34,11 +34,9 @@ class FileController:
             for i, row in enumerate(reader):
                 if i == 0:
                     continue
-
                 # Get the nodes
                 node1 = Node((int(row[0] or '0'), int(row[1] or '0'), int(row[2] or '0')))
                 node2 = Node((int(row[3] or '0'), int(row[4] or '0'), int(row[5] or '0')))
-
                 # Add the nodes, if they haven't been added yet
                 found_node = next((node for node in self.nodes if node1 == node), None)
                 if found_node:
@@ -50,14 +48,12 @@ class FileController:
                     node2 = found_node
                 else:
                     self.nodes.append(node2)
-
                 # Add the link
                 self.links.append(Link(node1, node2, int(row[6] or '0'), int(row[7] or '0'),
                                   int(row[8] or '0'), int(row[9] or '0')))
 
         # Print the file if debug is enabled
         self.print_file(log_level)
-
         return self.links, self.nodes
 
     def print_file(self, log_level):
@@ -75,7 +71,7 @@ class FileController:
         :param cheapest_path: Cheapest path from the start to the destination node.
         :param log_level: Level of logging, either debug or info.
         """
-        if log_level == logging.INFO or log_level == logging.DEBUG:
+        if log_level in (logging.INFO, logging.DEBUG):
             logging.info('Exporting result to: %s' % export_path)
 
         file = open(export_path, 'w')
@@ -84,7 +80,7 @@ class FileController:
         file.write('Cost: %f' % cheapest_path[len(cheapest_path)-1].g)
         file.close()
 
-        if log_level == logging.INFO or log_level == logging.DEBUG:
+        if log_level in (logging.INFO, logging.DEBUG):
             logging.info('Result successfully exported!')
 
     @staticmethod
