@@ -13,13 +13,13 @@
 
 Die Anwendung kann mit 
 
-```
+```shell script
 python main.py -i IMPORT_PATH
 ```
 gestartet werden. Der vorgegebene Datensatz liegt in `resources/data.csv`. 
 
 Eine vollständige Übersicht über alle Parameter bietet die Help-Message:
-```
+```shell script
 python main.py -h
 ```
 
@@ -30,6 +30,16 @@ Es können drei verschiedene Log-Level gesetzt werden:
 1. **Silent** (kein Parameter): Keine Ausgabe in der Konsole
 2. **Verbose (-v):** Gibt Info-Nachrichten aus
 3. **Debug (-d):** Gibt detailierte interne Nachrichten beim Import und Algorithmus aus
+
+### Unit-Tests
+
+Unit-Tests können im Project-Root mit dem Befehl
+
+```shell script
+python -m unittest discover -s ./tests -p "*_test.py" -v
+```
+
+gestartet werden.
 
 ## Changelog
 ### v0.1
