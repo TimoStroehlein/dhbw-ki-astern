@@ -1,4 +1,5 @@
 import itertools
+import logging
 
 from model.Link import Link
 from model.Node import Node
@@ -18,10 +19,10 @@ class AStartController:
         self.start_node = start_node
         self.dest_node = dest_node
 
-    def search_path(self):
+    def search_path(self, log_level):
         """
         Start the A* search algorithm.
-        :return: Successful or not successful, if successful, then return the cheapest path.
+        :return: Successful or not successful, if successful, then return the cheapest path and cost.
         """
         # Initialization
         self.start_node.g = 0
@@ -40,6 +41,8 @@ class AStartController:
             # Pop current node off the open list and add it to the closed list
             current_node: Node = open_list.pop(0)
             closed_list.append(current_node)
+            if log_level == logging.DEBUG:
+                logging.debug('current_node: ' + str(current_node))
 
             # Finish if the current node is the destination node
             path = self.is_finished(current_node)
@@ -251,7 +254,7 @@ class AStartController:
             path = self.reconstruct_path(current_node)
             for node in path:
                 print(node)
-            print('Destination reached, cost: %f' % current_node.f)
+            print('Destination reached, cost: %f' % current_node.g)
             return path
         return False
 

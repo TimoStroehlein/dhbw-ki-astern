@@ -56,32 +56,36 @@ class FileController:
                                   int(row[8] or '0'), int(row[9] or '0')))
 
         # Print the file if debug is enabled
-        if log_level == logging.DEBUG:
-            logging.debug('Data imported:')
-            self.print_file()
+        self.print_file(log_level)
 
         return self.links, self.nodes
 
-    def print_file(self):
+    def print_file(self, log_level):
         """ Print the file to the console """
-        for link in self.links:
-            print(str(link))
+        if log_level == logging.DEBUG:
+            logging.debug('Data imported:')
+            for link in self.links:
+                logging.debug(str(link))
 
     @staticmethod
-    def export_file(export_path, result: [], log_level=None):
+    def export_file(export_path, cheapest_path: [], log_level=None):
         """
         Export the result to a given file.
         :param export_path: Path to the file, where the result should be stored.
-        :param result: Cheapest path from the start to the destination node.
+        :param cheapest_path: Cheapest path from the start to the destination node.
         :param log_level: Level of logging, either debug or info.
         """
-        if log_level == logging.INFO:
-            print('Exporting result to: %s' % export_path)
+        if log_level == logging.INFO or log_level == logging.DEBUG:
+            logging.info('Exporting result to: %s' % export_path)
 
         file = open(export_path, 'w')
-        for link in result:
-            file.write(str(link) + '\n')
+        for node in cheapest_path:
+            file.write(str(node) + '\n')
+        file.write('Cost: %f' % cheapest_path[len(cheapest_path)-1].g)
         file.close()
+
+        if log_level == logging.INFO or log_level == logging.DEBUG:
+            logging.info('Result successfully exported!')
 
     @staticmethod
     def is_path_valid(path):

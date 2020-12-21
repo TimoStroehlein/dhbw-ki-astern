@@ -1,38 +1,39 @@
-(15, -4, 6),	f: 25.000000,	g: 0.000000,	h: 25.000000,	tritanium_blaster: 12,	energy_units: 12,	regeneration_time: 0.000000,	link_type: None
-(14, -4, 6),	f: 27.000000,	g: 3.000000,	h: 24.000000,	tritanium_blaster: 12,	energy_units: 11,	regeneration_time: 5.000000,	link_type: drone
-(13, -4, 6),	f: 28.000000,	g: 5.000000,	h: 23.000000,	tritanium_blaster: 12,	energy_units: 11,	regeneration_time: 3.000000,	link_type: door
-(12, -4, 6),	f: 28.000000,	g: 6.000000,	h: 22.000000,	tritanium_blaster: 12,	energy_units: 11,	regeneration_time: 2.000000,	link_type: open
-(12, -5, 6),	f: 30.000000,	g: 7.000000,	h: 23.000000,	tritanium_blaster: 12,	energy_units: 11,	regeneration_time: 1.000000,	link_type: open
-(12, -5, 7),	f: 33.000000,	g: 9.000000,	h: 24.000000,	tritanium_blaster: 12,	energy_units: 11,	regeneration_time: 0.000000,	link_type: ladder up
-(12, -5, 8),	f: 36.000000,	g: 11.000000,	h: 25.000000,	tritanium_blaster: 12,	energy_units: 11,	regeneration_time: 0.000000,	link_type: ladder up
-(11, -5, 8),	f: 37.000000,	g: 13.000000,	h: 24.000000,	tritanium_blaster: 12,	energy_units: 11,	regeneration_time: 0.000000,	link_type: door
-(10, -5, 8),	f: 37.000000,	g: 14.000000,	h: 23.000000,	tritanium_blaster: 12,	energy_units: 11,	regeneration_time: 0.000000,	link_type: open
-(9, -5, 8),	f: 37.000000,	g: 15.000000,	h: 22.000000,	tritanium_blaster: 12,	energy_units: 11,	regeneration_time: 0.000000,	link_type: open
-(9, -5, 9),	f: 40.000000,	g: 17.000000,	h: 23.000000,	tritanium_blaster: 12,	energy_units: 11,	regeneration_time: 0.000000,	link_type: ladder up
-(9, -6, 9),	f: 42.000000,	g: 18.000000,	h: 24.000000,	tritanium_blaster: 12,	energy_units: 11,	regeneration_time: 0.000000,	link_type: open
-(8, -6, 9),	f: 42.000000,	g: 19.000000,	h: 23.000000,	tritanium_blaster: 12,	energy_units: 11,	regeneration_time: 0.000000,	link_type: open
-(7, -6, 9),	f: 42.000000,	g: 20.000000,	h: 22.000000,	tritanium_blaster: 12,	energy_units: 11,	regeneration_time: 0.000000,	link_type: open
-(7, -5, 9),	f: 43.000000,	g: 22.000000,	h: 21.000000,	tritanium_blaster: 12,	energy_units: 11,	regeneration_time: 0.000000,	link_type: door
-(6, -5, 9),	f: 43.000000,	g: 23.000000,	h: 20.000000,	tritanium_blaster: 12,	energy_units: 11,	regeneration_time: 0.000000,	link_type: open
-(6, -4, 9),	f: 43.000000,	g: 24.000000,	h: 19.000000,	tritanium_blaster: 12,	energy_units: 11,	regeneration_time: 0.000000,	link_type: open
-(6, -3, 9),	f: 43.000000,	g: 25.000000,	h: 18.000000,	tritanium_blaster: 12,	energy_units: 11,	regeneration_time: 0.000000,	link_type: open
-(6, -2, 9),	f: 43.000000,	g: 26.000000,	h: 17.000000,	tritanium_blaster: 12,	energy_units: 11,	regeneration_time: 0.000000,	link_type: open
-(6, -1, 9),	f: 45.000000,	g: 29.000000,	h: 16.000000,	tritanium_blaster: 12,	energy_units: 10,	regeneration_time: 5.000000,	link_type: drone
-(6, -1, 8),	f: 44.500000,	g: 29.500000,	h: 15.000000,	tritanium_blaster: 12,	energy_units: 10,	regeneration_time: 4.500000,	link_type: ladder down
-(6, -1, 7),	f: 44.000000,	g: 30.000000,	h: 14.000000,	tritanium_blaster: 12,	energy_units: 10,	regeneration_time: 4.000000,	link_type: ladder down
-(6, -1, 6),	f: 43.500000,	g: 30.500000,	h: 13.000000,	tritanium_blaster: 12,	energy_units: 10,	regeneration_time: 3.500000,	link_type: ladder down
-(6, 0, 6),	f: 43.500000,	g: 31.500000,	h: 12.000000,	tritanium_blaster: 12,	energy_units: 10,	regeneration_time: 2.500000,	link_type: open
-(6, 1, 6),	f: 45.500000,	g: 32.500000,	h: 13.000000,	tritanium_blaster: 12,	energy_units: 10,	regeneration_time: 1.500000,	link_type: open
-(6, 1, 5),	f: 45.000000,	g: 33.000000,	h: 12.000000,	tritanium_blaster: 12,	energy_units: 10,	regeneration_time: 1.000000,	link_type: ladder down
-(5, 1, 5),	f: 47.000000,	g: 36.000000,	h: 11.000000,	tritanium_blaster: 11,	energy_units: 10,	regeneration_time: 0.000000,	link_type: wall or ground blasted
-(5, 1, 4),	f: 46.500000,	g: 36.500000,	h: 10.000000,	tritanium_blaster: 11,	energy_units: 10,	regeneration_time: 0.000000,	link_type: ladder down
-(4, 1, 4),	f: 48.500000,	g: 39.500000,	h: 9.000000,	tritanium_blaster: 10,	energy_units: 10,	regeneration_time: 0.000000,	link_type: wall or ground blasted
-(4, 1, 3),	f: 48.000000,	g: 40.000000,	h: 8.000000,	tritanium_blaster: 10,	energy_units: 10,	regeneration_time: 0.000000,	link_type: ladder down
-(3, 1, 3),	f: 48.000000,	g: 41.000000,	h: 7.000000,	tritanium_blaster: 10,	energy_units: 10,	regeneration_time: 0.000000,	link_type: open
-(3, 1, 2),	f: 47.500000,	g: 41.500000,	h: 6.000000,	tritanium_blaster: 10,	energy_units: 10,	regeneration_time: 0.000000,	link_type: ladder down
-(3, 0, 2),	f: 49.500000,	g: 44.500000,	h: 5.000000,	tritanium_blaster: 9,	energy_units: 10,	regeneration_time: 0.000000,	link_type: wall or ground blasted
-(3, 0, 1),	f: 49.000000,	g: 45.000000,	h: 4.000000,	tritanium_blaster: 9,	energy_units: 10,	regeneration_time: 0.000000,	link_type: ladder down
-(3, 0, 0),	f: 48.500000,	g: 45.500000,	h: 3.000000,	tritanium_blaster: 9,	energy_units: 10,	regeneration_time: 0.000000,	link_type: ladder down
-(2, 0, 0),	f: 50.500000,	g: 48.500000,	h: 2.000000,	tritanium_blaster: 8,	energy_units: 10,	regeneration_time: 0.000000,	link_type: wall or ground blasted
-(1, 0, 0),	f: 50.500000,	g: 49.500000,	h: 1.000000,	tritanium_blaster: 8,	energy_units: 10,	regeneration_time: 0.000000,	link_type: open
-(0, 0, 0),	f: 51.500000,	g: 51.500000,	h: 0.000000,	tritanium_blaster: 7,	energy_units: 10,	regeneration_time: 0.000000,	link_type: open
+(15, -4, 6), f: 25.000000, g: 0.000000, h: 25.000000, tritanium_blaster: 12, energy_units: 12, regeneration_time: 0.000000, link_type: None
+(14, -4, 6), f: 27.000000, g: 3.000000, h: 24.000000, tritanium_blaster: 12, energy_units: 11, regeneration_time: 5.000000, link_type: drone
+(13, -4, 6), f: 28.000000, g: 5.000000, h: 23.000000, tritanium_blaster: 12, energy_units: 11, regeneration_time: 3.000000, link_type: door
+(12, -4, 6), f: 28.000000, g: 6.000000, h: 22.000000, tritanium_blaster: 12, energy_units: 11, regeneration_time: 2.000000, link_type: open
+(12, -5, 6), f: 30.000000, g: 7.000000, h: 23.000000, tritanium_blaster: 12, energy_units: 11, regeneration_time: 1.000000, link_type: open
+(12, -5, 7), f: 33.000000, g: 9.000000, h: 24.000000, tritanium_blaster: 12, energy_units: 11, regeneration_time: 0.000000, link_type: ladder up
+(12, -5, 8), f: 36.000000, g: 11.000000, h: 25.000000, tritanium_blaster: 12, energy_units: 11, regeneration_time: 0.000000, link_type: ladder up
+(11, -5, 8), f: 37.000000, g: 13.000000, h: 24.000000, tritanium_blaster: 12, energy_units: 11, regeneration_time: 0.000000, link_type: door
+(10, -5, 8), f: 37.000000, g: 14.000000, h: 23.000000, tritanium_blaster: 12, energy_units: 11, regeneration_time: 0.000000, link_type: open
+(9, -5, 8), f: 37.000000, g: 15.000000, h: 22.000000, tritanium_blaster: 12, energy_units: 11, regeneration_time: 0.000000, link_type: open
+(9, -5, 9), f: 40.000000, g: 17.000000, h: 23.000000, tritanium_blaster: 12, energy_units: 11, regeneration_time: 0.000000, link_type: ladder up
+(9, -6, 9), f: 42.000000, g: 18.000000, h: 24.000000, tritanium_blaster: 12, energy_units: 11, regeneration_time: 0.000000, link_type: open
+(8, -6, 9), f: 42.000000, g: 19.000000, h: 23.000000, tritanium_blaster: 12, energy_units: 11, regeneration_time: 0.000000, link_type: open
+(7, -6, 9), f: 42.000000, g: 20.000000, h: 22.000000, tritanium_blaster: 12, energy_units: 11, regeneration_time: 0.000000, link_type: open
+(7, -5, 9), f: 43.000000, g: 22.000000, h: 21.000000, tritanium_blaster: 12, energy_units: 11, regeneration_time: 0.000000, link_type: door
+(6, -5, 9), f: 43.000000, g: 23.000000, h: 20.000000, tritanium_blaster: 12, energy_units: 11, regeneration_time: 0.000000, link_type: open
+(6, -4, 9), f: 43.000000, g: 24.000000, h: 19.000000, tritanium_blaster: 12, energy_units: 11, regeneration_time: 0.000000, link_type: open
+(6, -3, 9), f: 43.000000, g: 25.000000, h: 18.000000, tritanium_blaster: 12, energy_units: 11, regeneration_time: 0.000000, link_type: open
+(6, -2, 9), f: 43.000000, g: 26.000000, h: 17.000000, tritanium_blaster: 12, energy_units: 11, regeneration_time: 0.000000, link_type: open
+(6, -1, 9), f: 45.000000, g: 29.000000, h: 16.000000, tritanium_blaster: 12, energy_units: 10, regeneration_time: 5.000000, link_type: drone
+(6, -1, 8), f: 44.500000, g: 29.500000, h: 15.000000, tritanium_blaster: 12, energy_units: 10, regeneration_time: 4.500000, link_type: ladder down
+(6, -1, 7), f: 44.000000, g: 30.000000, h: 14.000000, tritanium_blaster: 12, energy_units: 10, regeneration_time: 4.000000, link_type: ladder down
+(6, -1, 6), f: 43.500000, g: 30.500000, h: 13.000000, tritanium_blaster: 12, energy_units: 10, regeneration_time: 3.500000, link_type: ladder down
+(6, 0, 6), f: 43.500000, g: 31.500000, h: 12.000000, tritanium_blaster: 12, energy_units: 10, regeneration_time: 2.500000, link_type: open
+(6, 1, 6), f: 45.500000, g: 32.500000, h: 13.000000, tritanium_blaster: 12, energy_units: 10, regeneration_time: 1.500000, link_type: open
+(6, 1, 5), f: 45.000000, g: 33.000000, h: 12.000000, tritanium_blaster: 12, energy_units: 10, regeneration_time: 1.000000, link_type: ladder down
+(5, 1, 5), f: 47.000000, g: 36.000000, h: 11.000000, tritanium_blaster: 11, energy_units: 10, regeneration_time: 0.000000, link_type: wall or ground blasted
+(5, 1, 4), f: 46.500000, g: 36.500000, h: 10.000000, tritanium_blaster: 11, energy_units: 10, regeneration_time: 0.000000, link_type: ladder down
+(4, 1, 4), f: 48.500000, g: 39.500000, h: 9.000000, tritanium_blaster: 10, energy_units: 10, regeneration_time: 0.000000, link_type: wall or ground blasted
+(4, 1, 3), f: 48.000000, g: 40.000000, h: 8.000000, tritanium_blaster: 10, energy_units: 10, regeneration_time: 0.000000, link_type: ladder down
+(3, 1, 3), f: 48.000000, g: 41.000000, h: 7.000000, tritanium_blaster: 10, energy_units: 10, regeneration_time: 0.000000, link_type: open
+(3, 1, 2), f: 47.500000, g: 41.500000, h: 6.000000, tritanium_blaster: 10, energy_units: 10, regeneration_time: 0.000000, link_type: ladder down
+(3, 0, 2), f: 49.500000, g: 44.500000, h: 5.000000, tritanium_blaster: 9, energy_units: 10, regeneration_time: 0.000000, link_type: wall or ground blasted
+(3, 0, 1), f: 49.000000, g: 45.000000, h: 4.000000, tritanium_blaster: 9, energy_units: 10, regeneration_time: 0.000000, link_type: ladder down
+(3, 0, 0), f: 48.500000, g: 45.500000, h: 3.000000, tritanium_blaster: 9, energy_units: 10, regeneration_time: 0.000000, link_type: ladder down
+(2, 0, 0), f: 50.500000, g: 48.500000, h: 2.000000, tritanium_blaster: 8, energy_units: 10, regeneration_time: 0.000000, link_type: wall or ground blasted
+(1, 0, 0), f: 50.500000, g: 49.500000, h: 1.000000, tritanium_blaster: 8, energy_units: 10, regeneration_time: 0.000000, link_type: open
+(0, 0, 0), f: 51.500000, g: 51.500000, h: 0.000000, tritanium_blaster: 7, energy_units: 10, regeneration_time: 0.000000, link_type: open
+Cost: 51.500000
