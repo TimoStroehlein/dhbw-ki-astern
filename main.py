@@ -47,10 +47,6 @@ def start(args):
     """
     Start the import and path calculation.
     """
-    if not args.import_path:
-        print('No import path with the \'-i\' argument has been set')
-        exit(1)
-
     # Read the data from the csv file
     file_controller = FileController()
     links, nodes = file_controller.import_file(args.import_path, log_level=args.log_level)
