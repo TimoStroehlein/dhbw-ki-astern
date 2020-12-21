@@ -1,5 +1,6 @@
 import argparse
 import logging
+import sys
 
 from model.Node import Node
 from controller.FileController import FileController
@@ -56,10 +57,10 @@ def main():
 
         # Calculate the path
         a_star_controller = AStartController(links, nodes, start_node, dest_node)
-        if a_star_controller.start_search():
-            exit(0)
+        if a_star_controller.search_path():
+            sys.exit(0)
         else:
-            exit(1)
+            sys.exit(1)
 
 
 if __name__ == '__main__':

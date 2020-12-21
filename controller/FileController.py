@@ -1,12 +1,16 @@
 import logging
 import os
 import csv
+import sys
 
 from model.Link import Link
 from model.Node import Node
 
 
 class FileController:
+    """
+    Import the graph from a csv file.
+    """
     def __init__(self):
         self.links = []
         self.nodes = []
@@ -15,13 +19,13 @@ class FileController:
         """
         Read the csv file from the given import path.
         :param import_path: Path to the csv file.
-        :param export_path: Path to the files where the result should be stored,
-        :param log_level: Level of logging, either debug or info
-        :return: Links and nodes from the csv file
+        :param export_path: Path to the files where the result should be stored.
+        :param log_level: Level of logging, either debug or info.
+        :return: Links and nodes from the csv file.
         """
         # Check import path is not valid, exit
         if not self.is_path_valid(import_path):
-            exit(2)
+            sys.exit(2)
 
         # Starting the import
         logging.info('Importing data from %s...', import_path)
@@ -65,8 +69,7 @@ class FileController:
             print('%s, %s, %d, %d, %d, %d' % (
                 link.node1, link.node2, link.is_door, link.is_open, link.is_sentinel, link.is_ladder))
 
-    @staticmethod
-    def is_path_valid(path):
+    def is_path_valid(self, path):
         """
         Checks if the passed path is valid.
         :param path: The path to check.
@@ -82,8 +85,7 @@ class FileController:
                 file = open(path, 'r')  # Opening with write deletes the file contents!
                 file.close()
                 return True
-            else:
-                return False
+            return False
         except OSError:
             # Cannot open the file
             print('[ERROR] The path \'', path, '\' is not a valid path or the file does not exist.')

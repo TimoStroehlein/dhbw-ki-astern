@@ -5,16 +5,23 @@ from model.Node import Node
 
 
 class AStartController:
+    """
+    Calculates the shortest/ cheapest path with the A* algorithm.
+    :param links: Links of the graph.
+    :param nodes: Nodes of the graph.
+    :param start_node: Start node of the graph, where the algorithm should start.
+    :param dest_node: Destination node of the graph.
+    """
     def __init__(self, links, nodes, start_node: Node, dest_node: Node):
         self.links = links
         self.nodes = nodes
         self.start_node = start_node
         self.dest_node = dest_node
 
-    def start_search(self):
+    def search_path(self):
         """
         Start the A* search algorithm.
-        :return: Successful or not successful
+        :return: Successful or not successful.
         """
         # Initialization
         self.start_node.g = 0
@@ -31,37 +38,15 @@ class AStartController:
             open_list.sort()
 
             # Pop current node off the open list and add it to the closed list
-            current_node = open_list.pop(0)
+            current_node: Node = open_list.pop(0)
             closed_list.append(current_node)
 
             # Finish if the current node is the destination node
-            if current_node == self.dest_node:
-                # Destroying the vinculum costs 5 minutes, with a tritanium-blaster 1 minute
-                if current_node.tritanium_blaster >= 1:
-                    current_node.g = current_node.g + 1
-                    current_node.f = current_node.g + current_node.h
-                    current_node.tritanium_blaster = current_node.tritanium_blaster - 1
-                else:
-                    current_node.g = current_node.g + 5
-                    current_node.f = current_node.g + current_node.h
-
-                # Reconstruct the path
-                path = self.reconstruct_path(current_node)
-                for node in path:
-                    print(node)
-                print('Destination reached, cost: %f' % current_node.f)
+            if self.is_finished(current_node):
                 return True
 
-            # Get all links to the child nodes
-            links = []
-            nodes = []
-            for link in self.links:
-                if link.node1 == current_node:
-                    links.append(link)
-                    nodes.append(link.node2)
-                elif link.node2 == current_node:
-                    links.append(link)
-                    nodes.append(link.node1)
+            # Get all child links and nodes
+            links, nodes = self.get_child_nodes(current_node)
 
             # Get all possible neighbours on the same level and below, that could be opened with a tritanium blaster
             neighbour_list = self.get_neighbors(current_node.position)
@@ -96,41 +81,70 @@ class AStartController:
     def g(self, current_link: Link, current_node: Node, child_node: Node):
         """
         Calculate the cost/ distance from start to the child node.
-        :param current_link: Current link from the current node to the child node
-        :param current_node: Current parent node
-        :param child_node: Child node of the current node
-        :return: Whether the g score could be set or not
+        :param current_link: Current link from the current node to the child node.
+        :param current_node: Current parent node.
+        :param child_node: Child node of the current node.
+        :return: Whether the g score could be set or not.
         """
-        # Determine whether the current or new g value is cheaper
-        def is_cheaper(cost, tritanium_blaster_cost=0, energy_unit_cost=0):
-            if child_node.g < current_node.g + cost:
-                return False
-            elif child_node.g == current_node.g + cost:
-                tritanium_blaster = child_node.tritanium_blaster - current_node.tritanium_blaster\
-                                    + tritanium_blaster_cost
-                energy_units = child_node.energy_units - current_node.energy_units + energy_unit_cost
-                # Current node has more tritanium blaster and energy units combined
-                if (tritanium_blaster + energy_units) < 0:
-                    return True
-                # Current node hase less tritanium blaster and energy units combined
-                else:
-                    return False
-            else:
-                return True
-
         # No link to the neighbor room, link can be blasted
         # Blasting a hole in a wall with a tritanium-blaster costs 3 minutes, can be used in all directions expect up
         if current_link is None:
-            if not is_cheaper(3):
+            if not self.is_cheaper(current_node, child_node, 3):
                 return False
             child_node.g = current_node.g + 3
             child_node.regeneration_time = current_node.regeneration_time - 3
             child_node.tritanium_blaster = current_node.tritanium_blaster - 1
             child_node.energy_units = current_node.energy_units
             child_node.parent_link_type = 'wall or ground blasted'
+            return True
 
         # Path with or without a drone
-        elif current_link.is_open:
+        if self.is_open(current_node, child_node, current_link):
+            return True
+
+        # Door costs 2 minutes
+        if self.is_door(current_node, child_node, current_link):
+            return True
+
+        # Up the ladder costs 2 minutes
+        # Down costs 1/2 minute
+        if self.is_ladder(current_node, child_node, current_link):
+            return True
+
+    def is_cheaper(self, current_node: Node, child_node: Node, cost, tritanium_blaster_cost=0, energy_unit_cost=0):
+        """
+        Determine whether the current or new g value is cheaper.
+        :param current_node: The current node.
+        :param child_node: The child node of the current node.
+        :param cost: Cost from the current to the child node.
+        :param tritanium_blaster_cost: Tritanium blaster cost from current to child node.
+        :param energy_unit_cost: Energy unit cost from current to child node.
+        :return: Whether the path is cheaper or not.
+        """
+        if child_node.g < current_node.g + cost:
+            return False
+        if child_node.g == current_node.g + cost:
+            tritanium_blaster = child_node.tritanium_blaster - current_node.tritanium_blaster \
+                                + tritanium_blaster_cost
+            energy_units = child_node.energy_units - current_node.energy_units + energy_unit_cost
+            # Current node has more tritanium blaster and energy units combined
+            if (tritanium_blaster + energy_units) < 0:
+                return True
+            # Current node hase less tritanium blaster and energy units combined
+            else:
+                return False
+        return True
+
+    def is_open(self, current_node: Node, child_node: Node, current_link: Link):
+        """
+        Check whether the link is open and the path is cheaper.
+        Path with or without a drone.
+        :param current_node: The current node.
+        :param child_node:  The child node of the current node.
+        :param current_link:  The link from the current to the child node.
+        :return: Whether the link is open and cheaper or not.
+        """
+        if current_link.is_open:
             # Destroying a drone costs 3 minutes and one energy unit
             # 5 minute regeneration time before a new drone can be fought
             if current_link.is_sentinel:
@@ -140,12 +154,13 @@ class AStartController:
                 # Check whether a regeneration is set or not, if so, take a brake
                 # A 1 minute Break can always be used and repeated
                 if current_node.regeneration_time == 0:
-                    if not is_cheaper(3, energy_unit_cost=1):
+                    if not self.is_cheaper(current_node, child_node, 3, energy_unit_cost=1):
                         return False
                     child_node.g = current_node.g + 3
                     child_node.parent_link_type = 'drone'
                 else:
-                    if not is_cheaper(3 + current_node.regeneration_time, energy_unit_cost=1):
+                    if not self.is_cheaper(current_node, child_node, 3 + current_node.regeneration_time,
+                                           energy_unit_cost=1):
                         return False
                     child_node.g = current_node.g + 3 + current_node.regeneration_time
                     child_node.parent_link_type = 'drone & %f minutes regeneration' % current_node.regeneration_time
@@ -155,36 +170,56 @@ class AStartController:
                 child_node.tritanium_blaster = current_node.tritanium_blaster
             # No obstacle, costs 1 minute
             else:
-                if not is_cheaper(1):
+                if not self.is_cheaper(current_node, child_node, 1):
                     return False
                 child_node.g = current_node.g + 1
                 child_node.regeneration_time = current_node.regeneration_time - 1
                 child_node.tritanium_blaster = current_node.tritanium_blaster
                 child_node.energy_units = current_node.energy_units
                 child_node.parent_link_type = 'open'
+            return True
+        return False
 
-        # Door costs 2 minutes
-        elif current_link.is_door:
-            if not is_cheaper(2):
+    def is_door(self, current_node: Node, child_node: Node, current_link: Link):
+        """
+        Check whether the link is a door and the path is cheaper.
+        Door costs 2 minutes.
+        :param current_node: The current node.
+        :param child_node:  The child node of the current node.
+        :param current_link:  The link from the current to the child node.
+        :return: Whether the link is a door and cheaper or not.
+        """
+        if current_link.is_door:
+            if not self.is_cheaper(current_node, child_node, 2):
                 return False
             child_node.g = current_node.g + 2
             child_node.regeneration_time = current_node.regeneration_time - 2
             child_node.tritanium_blaster = current_node.tritanium_blaster
             child_node.energy_units = current_node.energy_units
             child_node.parent_link_type = 'door'
+            return True
+        return False
 
-        # Up the ladder costs 2 minutes
-        # Down costs 1/2 minute
-        elif current_link.is_ladder:
+    def is_ladder(self, current_node: Node, child_node: Node, current_link: Link):
+        """
+        Check whether the link is a ladder and the path is cheaper.
+        Up the ladder costs 2 minutes.
+        Down costs 1/2 minute.
+        :param current_node: The current node.
+        :param child_node:  The child node of the current node.
+        :param current_link:  The link from the current to the child node.
+        :return: Whether the link is a ladder and cheaper or not.
+        """
+        if current_link.is_ladder:
             # Check if the ladder has been went up or down
             if current_node.position[2] <= child_node.position[2]:
-                if not is_cheaper(2, energy_unit_cost=2):
+                if not self.is_cheaper(current_node, child_node, 2, energy_unit_cost=2):
                     return False
                 child_node.g = current_node.g + 2
                 child_node.regeneration_time = current_node.regeneration_time - 2
                 child_node.parent_link_type = 'ladder up'
             else:
-                if not is_cheaper(0.5, energy_unit_cost=2):
+                if not self.is_cheaper(current_node, child_node, 0.5, energy_unit_cost=2):
                     return False
                 child_node.g = current_node.g + 0.5
                 child_node.regeneration_time = current_node.regeneration_time - 0.5
@@ -192,14 +227,38 @@ class AStartController:
 
             child_node.tritanium_blaster = current_node.tritanium_blaster
             child_node.energy_units = current_node.energy_units
+            return True
+        return False
 
-        return True
+    def is_finished(self, current_node: Node):
+        """
+        Finish if the current node is the destination node.
+        :param current_node: The current node.
+        :return: If the path has been found or not.
+        """
+        if current_node == self.dest_node:
+            # Destroying the vinculum costs 5 minutes, with a tritanium-blaster 1 minute
+            if current_node.tritanium_blaster >= 1:
+                current_node.g = current_node.g + 1
+                current_node.f = current_node.g + current_node.h
+                current_node.tritanium_blaster = current_node.tritanium_blaster - 1
+            else:
+                current_node.g = current_node.g + 5
+                current_node.f = current_node.g + current_node.h
+
+            # Reconstruct the path
+            path = self.reconstruct_path(current_node)
+            for node in path:
+                print(node)
+            print('Destination reached, cost: %f' % current_node.f)
+            return True
+        return False
 
     def h(self, child_node: Node):
         """
         Estimate the cost of the cheapest path from the next node to the destination node.
         Calculate the heuristic.
-        :param child_node: Child node from where the heuristic should be calculated
+        :param child_node: Child node from where the heuristic should be calculated.
         """
         (x1, y1, z1) = child_node.position
         (x2, y2, z2) = self.dest_node.position
@@ -208,8 +267,8 @@ class AStartController:
     def reconstruct_path(self, current_node: Node):
         """
         Reconstruct the cheapest path with backtracking.
-        :param current_node: Current node from where the path should be backtracked
-        :return: Reversed path
+        :param current_node: Current node from where the path should be backtracked.
+        :return: Reversed path.
         """
         path = [current_node]
         while current_node != self.start_node:
@@ -218,11 +277,28 @@ class AStartController:
         # Return reversed path
         return path[::-1]
 
+    def get_child_nodes(self, current_node: Node):
+        """
+        Get all links to the child nodes.
+        :param current_node: The current node.
+        :return: Child links and nodes.
+        """
+        links = []
+        nodes = []
+        for link in self.links:
+            if link.node1 == current_node:
+                links.append(link)
+                nodes.append(link.node2)
+            elif link.node2 == current_node:
+                links.append(link)
+                nodes.append(link.node1)
+        return links, nodes
+
     def get_neighbors(self, position):
         """
         Get all neighbours of the current room, also those without a link.
-        :param position: Tuple position of the node
-        :return: Neighbor of the node
+        :param position: Tuple position of the node.
+        :return: Neighbor of the node.
         """
         neighbors = []
         (x, y, z) = position

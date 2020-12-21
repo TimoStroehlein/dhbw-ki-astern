@@ -2,6 +2,10 @@ import sys
 
 
 class Node:
+    """
+    Represents a room in the cube/ graph.
+    :param position: Holds the x, y and z coordinates as tuple.
+    """
     def __init__(self, position):
         self.position = position
         self.f = sys.maxsize    # Total cost of the node: f = g + h
