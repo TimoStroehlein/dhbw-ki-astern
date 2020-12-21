@@ -7,9 +7,9 @@ class Link:
     :param node1: The first node of the link.
     :param node2: The second node of the link.
     :param is_door: Whether the link is a door or not.
-    :param is_door: Whether the link is open or not.
-    :param is_door: Whether the link is a sentinel or not.
-    :param is_door: Whether the link is a ladder or not.
+    :param is_open: Whether the link is open or not.
+    :param is_sentinel: Whether the link is a sentinel or not.
+    :param is_ladder: Whether the link is a ladder or not.
     """
     def __init__(self, node1: Node, node2: Node, is_door, is_open, is_sentinel, is_ladder):
         self.node1 = node1

@@ -41,8 +41,7 @@ class AStartController:
             # Pop current node off the open list and add it to the closed list
             current_node: Node = open_list.pop(0)
             closed_list.append(current_node)
-            if log_level == logging.DEBUG:
-                logging.debug('current_node: ' + str(current_node))
+            logging.debug('current_node: ' + str(current_node))
 
             # Finish if the current node is the destination node
             path = self.is_finished(current_node)
@@ -253,8 +252,8 @@ class AStartController:
             # Reconstruct the path
             path = self.reconstruct_path(current_node)
             for node in path:
-                print(node)
-            print('Destination reached, cost: %f' % current_node.g)
+                logging.debug(node)
+            logging.info('Destination reached, final cost: %f' % current_node.g)
             return path
         return False
 
@@ -313,5 +312,6 @@ class AStartController:
                 if found_node:
                     neighbors.append(found_node)
             except IndexError:
+                logging.warning("IndexError in get_neighbors at candidate ", candidate)
                 pass
         return neighbors

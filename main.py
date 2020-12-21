@@ -57,18 +57,15 @@ def start(args):
 
     # Calculate the path
     a_star_controller = AStartController(links, nodes, start_node, dest_node)
-    if args.log_level == logging.INFO or args.log_level == logging.DEBUG:
-        logging.info('Starting path search...')
+    logging.info('Starting path search...')
     cheapest_path = a_star_controller.search_path(args.log_level)
     if cheapest_path:
-        if args.log_level == logging.INFO or args.log_level == logging.DEBUG:
-            logging.info('Cheapest path successfully found!')
+        logging.info('Cheapest path successfully found!')
         if args.export_path:
             file_controller.export_file(args.export_path, cheapest_path, args.log_level)
         sys.exit(0)
     else:
-        if args.log_level == logging.INFO or args.log_level == logging.DEBUG:
-            logging.info('Cheapest path could not be found.')
+        logging.fatal('Cheapest path could not be found.')
         sys.exit(1)
 
 

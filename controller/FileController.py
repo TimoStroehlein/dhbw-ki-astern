@@ -52,16 +52,17 @@ class FileController:
                 self.links.append(Link(node1, node2, int(row[6] or '0'), int(row[7] or '0'),
                                   int(row[8] or '0'), int(row[9] or '0')))
 
+        logging.info('Successfully imported data from %s!', import_path)
+
         # Print the file if debug is enabled
         self.print_file(log_level)
         return self.links, self.nodes
 
     def print_file(self, log_level):
         """ Print the file to the console """
-        if log_level == logging.DEBUG:
-            logging.debug('Data imported:')
-            for link in self.links:
-                logging.debug(str(link))
+        logging.debug('Data imported:')
+        for link in self.links:
+            logging.debug(str(link))
 
     @staticmethod
     def export_file(export_path, cheapest_path: [], log_level=None):
@@ -71,8 +72,7 @@ class FileController:
         :param cheapest_path: Cheapest path from the start to the destination node.
         :param log_level: Level of logging, either debug or info.
         """
-        if log_level in (logging.INFO, logging.DEBUG):
-            logging.info('Exporting result to: %s' % export_path)
+        logging.info('Exporting result to: %s' % export_path)
 
         file = open(export_path, 'w')
         for node in cheapest_path:
@@ -80,8 +80,7 @@ class FileController:
         file.write('Cost: %f' % cheapest_path[len(cheapest_path)-1].g)
         file.close()
 
-        if log_level in (logging.INFO, logging.DEBUG):
-            logging.info('Result successfully exported!')
+        logging.info('Result successfully exported!')
 
     @staticmethod
     def is_path_valid(path):
@@ -103,9 +102,9 @@ class FileController:
             return False
         except OSError:
             # Cannot open the file
-            print('[ERROR] The path \'', path, '\' is not a valid path or the file does not exist.')
+            logging.error('The path \'', path, '\' is not a valid path or the file does not exist.')
             return False
         except TypeError:
             # Path is not of type string or os.path, should never happen
-            print("[FATAL] Path is in an invalid type!")
+            logging.error("Path is in an invalid type! Aborting file access.")
             return False
