@@ -69,7 +69,8 @@ class FileController:
             print('%s, %s, %d, %d, %d, %d' % (
                 link.node1, link.node2, link.is_door, link.is_open, link.is_sentinel, link.is_ladder))
 
-    def is_path_valid(self, path):
+    @staticmethod
+    def is_path_valid(path):
         """
         Checks if the passed path is valid.
         :param path: The path to check.

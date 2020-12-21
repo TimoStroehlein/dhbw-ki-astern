@@ -113,7 +113,8 @@ class AStartController:
 
         return False
 
-    def is_cheaper(self, current_node: Node, child_node: Node, cost, tritanium_blaster_cost=0, energy_unit_cost=0):
+    @staticmethod
+    def is_cheaper(current_node: Node, child_node: Node, cost, tritanium_blaster_cost=0, energy_unit_cost=0):
         """
         Determine whether the current or new g value is cheaper.
         :param current_node: The current node.
@@ -304,7 +305,7 @@ class AStartController:
         candidates = [(x - 1, y, z), (x + 1, y, z), (x, y - 1, z), (x, y + 1, z), (x, y, z - 1)]
         for candidate in candidates:
             try:
-                found_node = next(filter(lambda node: node.position == candidate, self.nodes), None)
+                found_node = next(filter(lambda node, pos=candidate: node.position == pos, self.nodes), None)
                 if found_node:
                     neighbors.append(found_node)
             except IndexError:
