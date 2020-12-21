@@ -46,10 +46,7 @@ def main():
     if args.import_path:
         # Read the data from the csv file
         file_controller = FileController()
-        if args.export_path:
-            links, nodes = file_controller.read_file(args.import_path, args.export_path, log_level=args.log_level)
-        else:
-            links, nodes = file_controller.read_file(args.import_path, log_level=args.log_level)
+        links, nodes = file_controller.import_file(args.import_path, log_level=args.log_level)
 
         # Set the start node
         start_node = Node((15, -4, 6))
@@ -57,7 +54,10 @@ def main():
 
         # Calculate the path
         a_star_controller = AStartController(links, nodes, start_node, dest_node)
-        if a_star_controller.search_path():
+        result = a_star_controller.search_path()
+        if result:
+            if args.export_path:
+                file_controller.export_file(args.export_path, result, args.log_level)
             sys.exit(0)
         else:
             sys.exit(1)

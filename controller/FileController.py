@@ -15,11 +15,10 @@ class FileController:
         self.links = []
         self.nodes = []
 
-    def read_file(self, import_path, export_path=None, log_level=None):
+    def import_file(self, import_path, log_level=None):
         """
         Read the csv file from the given import path.
         :param import_path: Path to the csv file.
-        :param export_path: Path to the files where the result should be stored.
         :param log_level: Level of logging, either debug or info.
         :return: Links and nodes from the csv file.
         """
@@ -66,8 +65,23 @@ class FileController:
     def print_file(self):
         """ Print the file to the console """
         for link in self.links:
-            print('%s, %s, %d, %d, %d, %d' % (
-                link.node1, link.node2, link.is_door, link.is_open, link.is_sentinel, link.is_ladder))
+            print(str(link))
+
+    @staticmethod
+    def export_file(export_path, result: [], log_level=None):
+        """
+        Export the result to a given file.
+        :param export_path: Path to the file, where the result should be stored.
+        :param result: Cheapest path from the start to the destination node.
+        :param log_level: Level of logging, either debug or info.
+        """
+        if log_level == logging.INFO:
+            print('Exporting result to: %s' % export_path)
+
+        file = open(export_path, 'w')
+        for link in result:
+            file.write(str(link) + '\n')
+        file.close()
 
     @staticmethod
     def is_path_valid(path):

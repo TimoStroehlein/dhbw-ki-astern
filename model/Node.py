@@ -38,7 +38,6 @@ class Node:
         """ Return the lower node, used to sort nodes """
         return self.f < other.f
 
-    #
     def __str__(self):
         """ Return object as string """
         return '%s,\tf: %f,\tg: %f,\th: %f,\ttritanium_blaster: %d,\tenergy_units: %d,'\

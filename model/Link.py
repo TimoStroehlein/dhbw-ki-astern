@@ -18,3 +18,8 @@ class Link:
         self.is_open = is_open
         self.is_sentinel = is_sentinel
         self.is_ladder = is_ladder
+
+    def __str__(self):
+        """ Return object as string """
+        return '%s, %s, %d, %d, %d, %d' % (
+                self.node1, self.node2, self.is_door, self.is_open, self.is_sentinel, self.is_ladder)

@@ -21,7 +21,7 @@ class AStartController:
     def search_path(self):
         """
         Start the A* search algorithm.
-        :return: Successful or not successful.
+        :return: Successful or not successful, if successful, then return the cheapest path.
         """
         # Initialization
         self.start_node.g = 0
@@ -42,8 +42,9 @@ class AStartController:
             closed_list.append(current_node)
 
             # Finish if the current node is the destination node
-            if self.is_finished(current_node):
-                return True
+            path = self.is_finished(current_node)
+            if path:
+                return path
 
             # Get all child links and nodes
             links, nodes = self.get_child_nodes(current_node)
@@ -234,7 +235,7 @@ class AStartController:
         """
         Finish if the current node is the destination node.
         :param current_node: The current node.
-        :return: If the path has been found or not.
+        :return: If the path has been found or not, if so, return the cheapest path.
         """
         if current_node == self.dest_node:
             # Destroying the vinculum costs 5 minutes, with a tritanium-blaster 1 minute
@@ -251,7 +252,7 @@ class AStartController:
             for node in path:
                 print(node)
             print('Destination reached, cost: %f' % current_node.f)
-            return True
+            return path
         return False
 
     def h(self, child_node: Node):
