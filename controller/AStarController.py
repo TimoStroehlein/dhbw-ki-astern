@@ -111,6 +111,8 @@ class AStartController:
         if self.is_ladder(current_node, child_node, current_link):
             return True
 
+        return False
+
     def is_cheaper(self, current_node: Node, child_node: Node, cost, tritanium_blaster_cost=0, energy_unit_cost=0):
         """
         Determine whether the current or new g value is cheaper.
@@ -127,12 +129,9 @@ class AStartController:
             tritanium_blaster = child_node.tritanium_blaster - current_node.tritanium_blaster \
                                 + tritanium_blaster_cost
             energy_units = child_node.energy_units - current_node.energy_units + energy_unit_cost
-            # Current node has more tritanium blaster and energy units combined
-            if (tritanium_blaster + energy_units) < 0:
-                return True
-            # Current node hase less tritanium blaster and energy units combined
-            else:
-                return False
+            # True: Current node has more tritanium blaster and energy units combined
+            # False: Current node hase less tritanium blaster and energy units combined
+            return (tritanium_blaster + energy_units) < 0
         return True
 
     def is_open(self, current_node: Node, child_node: Node, current_link: Link):
