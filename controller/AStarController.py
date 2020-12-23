@@ -13,11 +13,13 @@ class AStarController:
     :param start_node: Start node of the graph, where the algorithm should start.
     :param dest_node: Destination node of the graph.
     """
-    def __init__(self, links, nodes, start_node: Node, dest_node: Node):
+    def __init__(self, links, nodes, start_node: Node, dest_node: Node, tritanium_blaster=12, energy_units=12):
         self.links = links
         self.nodes = nodes
         self.start_node = start_node
         self.dest_node = dest_node
+        self.start_node.tritanium_blaster = tritanium_blaster
+        self.start_node.energy_units = energy_units
 
     def search_path(self):
         """
@@ -29,8 +31,6 @@ class AStarController:
         self.start_node.g = 0
         self.h(self.start_node)
         self.start_node.f = self.start_node.g + self.start_node.h
-        self.start_node.tritanium_blaster = 12
-        self.start_node.energy_units = 12
         open_list = [self.start_node]  # Open list, contains the start node at the beginning
         closed_list = []  # Closed list, contains all already visited nodes
 
