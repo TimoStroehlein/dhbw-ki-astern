@@ -15,15 +15,21 @@ class FileController:
         self.links = []
         self.nodes = []
 
-    def import_file(self, import_path):
+    def import_file(self, import_path, start_node: Node, dest_node: Node):
         """
         Read the csv file from the given import path.
+        :param start_node: Start node of the graph.
+        :param dest_node: Destination node of the graph.
         :param import_path: Path to the csv file.
         :return: Links and nodes from the csv file.
         """
         # If the import path is not valid, exit
         if not self.is_path_valid(import_path):
             sys.exit(2)
+
+        # Add the start and dest nodes to the nodes list
+        self.nodes.append(start_node)
+        self.nodes.append(dest_node)
 
         # Starting the import
         with open(import_path) as csv_file:

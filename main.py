@@ -49,15 +49,15 @@ def start(args):
     """
     Start the import and path calculation.
     """
-    # Read the data from the csv file
-    file_controller = FileController()
-    logging.info('Importing data from %s...', args.import_path)
-    links, nodes = file_controller.import_file(args.import_path)
-    logging.info('Successfully imported data from %s!', args.import_path)
-
     # Set the start node
     start_node = Node((15, -4, 6))
     dest_node = Node((0, 0, 0))  # End node is the center of the cube
+
+    # Read the data from the csv file
+    file_controller = FileController()
+    logging.info('Importing data from %s...', args.import_path)
+    links, nodes = file_controller.import_file(args.import_path, start_node, dest_node)
+    logging.info('Successfully imported data from %s!', args.import_path)
 
     # Calculate the path
     a_star_controller = AStarController(links, nodes, start_node, dest_node)

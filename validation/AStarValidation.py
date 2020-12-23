@@ -11,5 +11,5 @@ class AStarValidation(unittest.TestCase):
         # Set up the controller with the validation example
         path = './validation/resources/%s.csv' % filename
         file_controller = FileController()
-        links, nodes = file_controller.import_file(path)
+        links, nodes = file_controller.import_file(path, start_node, dest_node)
         cls.astar_controller = AStarController(links, nodes, start_node, dest_node, blaster, energy)

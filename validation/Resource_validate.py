@@ -32,7 +32,7 @@ class ValidateRouting(AStarValidation):
         self.assertEqual(expected, actual)
 
     def test_UseBlaster_ShouldReduceBlasterCount(self):
-        AStarValidation.set_up_test_method('blasting', Node((2, 0, 0)), blaster=1)
+        AStarValidation.set_up_test_method('blasting', Node((1, 0, 0)), blaster=1)
 
         expected = 0
         result = AStarValidation.astar_controller.search_path()

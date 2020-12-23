@@ -13,7 +13,8 @@ class AStarController:
     :param start_node: Start node of the graph, where the algorithm should start.
     :param dest_node: Destination node of the graph.
     """
-    def __init__(self, links, nodes, start_node: Node, dest_node: Node, tritanium_blaster=12, energy_units=12):
+    def __init__(self, links, nodes, start_node: Node, dest_node: Node, tritanium_blaster=12,
+                 energy_units=12):
         self.links = links
         self.nodes = nodes
         self.start_node = start_node
