@@ -73,7 +73,8 @@ class FileController:
         file.write('Cost: %f' % cheapest_path[len(cheapest_path)-1].g)
         file.close()
 
-    def is_path_valid(self, path):
+    @staticmethod
+    def is_path_valid(path):
         """
         Checks if the passed path is valid.
         :param path: The path to check.
@@ -92,9 +93,9 @@ class FileController:
             return False
         except OSError:
             # Cannot open the file
-            logging.error('The path \'', path, '\' is not a valid path or the file does not exist.')
+            logging.error('The path \'%s\' is not a valid path or the file does not exist.' % path)
             return False
         except TypeError:
             # Path is not of type string or os.path, should never happen
-            logging.error("Path is in an invalid type! Aborting file access.")
+            logging.error('Path is in an invalid type! Aborting file access.')
             return False

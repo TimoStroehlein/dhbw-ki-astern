@@ -5,7 +5,7 @@ from model.Link import Link
 from model.Node import Node
 
 
-class AStartController:
+class AStarController:
     """
     Calculates the shortest/ cheapest path with the A* algorithm.
     :param links: Links of the graph.
@@ -19,10 +19,11 @@ class AStartController:
         self.start_node = start_node
         self.dest_node = dest_node
 
-    def search_path(self, log_level):
+    def search_path(self):
         """
         Start the A* search algorithm.
-        :return: Successful or not successful, if successful, then return the cheapest path and cost.
+        :return: Successful or not successful, if successful, return the cheapest path as list of
+        links.
         """
         # Initialization
         self.start_node.g = 0
@@ -33,7 +34,8 @@ class AStartController:
         open_list = [self.start_node]  # Open list, contains the start node at the beginning
         closed_list = []  # Closed list, contains all already visited nodes
 
-        # Iterate through all nodes until every node has been visited or the destination node has not been reached
+        # Iterate through all nodes until every node has been visited or the destination node has
+        # been reached
         while open_list:
             # Sort the open list to get the lowest f score node first
             open_list.sort()
@@ -41,7 +43,7 @@ class AStartController:
             # Pop current node off the open list and add it to the closed list
             current_node: Node = open_list.pop(0)
             closed_list.append(current_node)
-            logging.debug('current_node: ' + str(current_node))
+            logging.debug('current_node: %s' % str(current_node))
 
             # Finish if the current node is the destination node
             path = self.is_finished(current_node)
@@ -51,7 +53,8 @@ class AStartController:
             # Get all child links and nodes
             links, nodes = self.get_child_nodes(current_node)
 
-            # Get all possible neighbours on the same level and below, that could be opened with a tritanium blaster
+            # Get all possible neighbours on the same level and below, that could be opened with a
+            # tritanium blaster
             neighbour_list = self.get_neighbors(current_node.position)
             neighbour: Node
             for neighbour in neighbour_list:
@@ -90,7 +93,8 @@ class AStartController:
         :return: Whether the g score could be set or not.
         """
         # No link to the neighbor room, link can be blasted
-        # Blasting a hole in a wall with a tritanium-blaster costs 3 minutes, can be used in all directions expect up
+        # Blasting a hole in a wall with a tritanium-blaster costs 3 minutes, can be used in all
+        # directions expect up
         if current_link is None:
             if not self.is_cheaper(current_node, child_node, 3):
                 return False
@@ -117,7 +121,8 @@ class AStartController:
         return False
 
     @staticmethod
-    def is_cheaper(current_node: Node, child_node: Node, cost, tritanium_blaster_cost=0, energy_unit_cost=0):
+    def is_cheaper(current_node: Node, child_node: Node, cost, tritanium_blaster_cost=0,
+                   energy_unit_cost=0):
         """
         Determine whether the current or new g value is cheaper.
         :param current_node: The current node.
@@ -162,11 +167,13 @@ class AStartController:
                     child_node.g = current_node.g + 3
                     child_node.parent_link_type = 'drone'
                 else:
-                    if not self.is_cheaper(current_node, child_node, 3 + current_node.regeneration_time,
+                    if not self.is_cheaper(current_node,
+                                           child_node, 3 + current_node.regeneration_time,
                                            energy_unit_cost=1):
                         return False
                     child_node.g = current_node.g + 3 + current_node.regeneration_time
-                    child_node.parent_link_type = 'drone & %f minutes regeneration' % current_node.regeneration_time
+                    child_node.parent_link_type = 'drone & %f minutes regeneration' %\
+                                                  current_node.regeneration_time
 
                 child_node.energy_units = current_node.energy_units - 1
                 child_node.regeneration_time = 5
@@ -271,7 +278,7 @@ class AStartController:
         """
         Reconstruct the cheapest path with backtracking.
         :param current_node: Current node from where the path should be backtracked.
-        :return: Reversed path.
+        :return: Reversed path as list of links.
         """
         path = [current_node]
         while current_node != self.start_node:
@@ -308,10 +315,10 @@ class AStartController:
         candidates = [(x - 1, y, z), (x + 1, y, z), (x, y - 1, z), (x, y + 1, z), (x, y, z - 1)]
         for candidate in candidates:
             try:
-                found_node = next(filter(lambda node, pos=candidate: node.position == pos, self.nodes), None)
+                found_node = next(
+                    filter(lambda node, pos=candidate: node.position == pos, self.nodes), None)
                 if found_node:
                     neighbors.append(found_node)
             except IndexError:
-                logging.warning("IndexError in get_neighbors at candidate ", candidate)
-                pass
+                logging.warning('IndexError in get_neighbors at candidate %s' % str(candidate))
         return neighbors
