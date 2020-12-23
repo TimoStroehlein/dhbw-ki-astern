@@ -253,9 +253,11 @@ class AStarController:
                 current_node.g = current_node.g + 1
                 current_node.f = current_node.g + current_node.h
                 current_node.tritanium_blaster = current_node.tritanium_blaster - 1
+                current_node.regeneration_time = current_node.regeneration_time - 1
             else:
                 current_node.g = current_node.g + 5
                 current_node.f = current_node.g + current_node.h
+                current_node.regeneration_time = current_node.regeneration_time - 5
 
             # Reconstruct the path
             path = self.reconstruct_path(current_node)
