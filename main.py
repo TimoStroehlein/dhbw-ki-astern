@@ -1,6 +1,7 @@
 import argparse
 import logging
 import sys
+import time
 
 from model.Node import Node
 from controller.FileController import FileController
@@ -9,7 +10,8 @@ from controller.AStarController import AStartController
 
 def main():
     # Argument parser that handles the cli arguments
-    parser = argparse.ArgumentParser(description='A program to to find the shortest path with A*.')
+    parser = argparse.ArgumentParser(
+        description='A program to to find the shortest path with A*.')
 
     # Each argument is handled differently
     parser.add_argument("-v", "--verbose",
@@ -49,7 +51,9 @@ def start(args):
     """
     # Read the data from the csv file
     file_controller = FileController()
+    logging.info('Importing data from %s...', args.import_path)
     links, nodes = file_controller.import_file(args.import_path)
+    logging.info('Successfully imported data from %s!', args.import_path)
 
     # Set the start node
     start_node = Node((15, -4, 6))
@@ -58,11 +62,15 @@ def start(args):
     # Calculate the path
     a_star_controller = AStartController(links, nodes, start_node, dest_node)
     logging.info('Starting path search...')
+    start = time.perf_counter()
     cheapest_path = a_star_controller.search_path(args.log_level)
+    end = time.perf_counter()
     if cheapest_path:
-        logging.info('Cheapest path successfully found!')
+        logging.info('Cheapest path successfully found in %.3f ms!', (end - start) * 1000)
         if args.export_path:
+            logging.info('Exporting result to: %s' % args.export_path)
             file_controller.export_file(args.export_path, cheapest_path)
+            logging.info('Result successfully exported!')
         sys.exit(0)
     else:
         logging.fatal('Cheapest path could not be found.')

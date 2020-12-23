@@ -26,7 +26,6 @@ class FileController:
             sys.exit(2)
 
         # Starting the import
-        logging.info('Importing data from %s...', import_path)
         with open(import_path) as csv_file:
             # Iterate through each row
             reader = csv.reader(csv_file, delimiter=';')
@@ -51,8 +50,6 @@ class FileController:
                 self.links.append(Link(node1, node2, int(row[6] or '0'), int(row[7] or '0'),
                                   int(row[8] or '0'), int(row[9] or '0')))
 
-        logging.info('Successfully imported data from %s!', import_path)
-
         # Print the file if debug is enabled
         self.print_file()
         return self.links, self.nodes
@@ -70,15 +67,11 @@ class FileController:
         :param export_path: Path to the file, where the result should be stored.
         :param cheapest_path: Cheapest path from the start to the destination node.
         """
-        logging.info('Exporting result to: %s' % export_path)
-
         file = open(export_path, 'w')
         for node in cheapest_path:
             file.write(str(node) + '\n')
         file.write('Cost: %f' % cheapest_path[len(cheapest_path)-1].g)
         file.close()
-
-        logging.info('Result successfully exported!')
 
     def is_path_valid(self, path):
         """
