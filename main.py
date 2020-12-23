@@ -67,7 +67,7 @@ def start(args):
     end_time = time.perf_counter()
     if cheapest_path:
         logging.info('Cheapest path successfully found in %.3f ms!' %
-                     (end_time - start_time) * 1000)
+                     ((end_time - start_time) * 1000))
         if args.export_path:
             logging.info('Exporting result to: %s' % args.export_path)
             file_controller.export_file(args.export_path, cheapest_path)
