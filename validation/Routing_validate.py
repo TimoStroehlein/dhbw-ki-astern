@@ -2,7 +2,7 @@ from validation.AStarValidation import AStarValidation
 from model.Node import Node
 
 
-class ValidateResources(AStarValidation):
+class ValidateRouting(AStarValidation):
     """
     Unit tests for validating the routing of the A* algorithm.
     Caluclates times for bigger systems and for simple links (door, open, ladders, sentinel)
