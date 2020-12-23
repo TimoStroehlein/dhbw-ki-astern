@@ -1,6 +1,9 @@
 from controller.FileController import FileController
 import unittest
 
+from model.Link import Link
+from model.Node import Node
+
 
 class TestFileController(unittest.TestCase):
 
@@ -31,3 +34,8 @@ class TestFileController(unittest.TestCase):
 
         actual = file_controller.is_path_valid(path)
         self.assertFalse(actual)
+
+    #def test_importFile_TestFile_ShouldReturnLinksNodes(self):
+    #    path = './tests/resources/test.csv'
+    #    file_controller = FileController()
+    #    expected = Node()

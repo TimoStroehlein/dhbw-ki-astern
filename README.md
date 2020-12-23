@@ -61,6 +61,16 @@ Geändert:
 - Technische Dokumentation in separate PDF verschoben
 - README.md Verschlimmbesserungen
 
+### v0.3
+Implementiert:
+- Unit-Tests für Algorithmus und Import
+- Validation Tests für Algorithmus
+- Zeitmessung für Algorithmus
+
+Geändert:
+- Weitere Violations entfernt (Coding Conventions, Naming Conventions)
+- Codekommentare verbessert
+
 <!--Image Resources-->
 [python-image]: https://img.shields.io/badge/python-v3.8.5+-blue?logo=python
 [code-inspection-score]: https://www.code-inspector.com/project/16904/score/svg

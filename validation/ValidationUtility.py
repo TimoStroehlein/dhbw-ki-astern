@@ -4,7 +4,7 @@ from controller.FileController import FileController
 from model.Node import Node
 
 
-class AStarValidation(unittest.TestCase):
+class ValidationUtility(unittest.TestCase):
     """
     Parent Class for all validation unit tests.
     Contains utility needed to set up validation tests.
