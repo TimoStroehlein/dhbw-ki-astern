@@ -17,7 +17,7 @@ class ValidateRouting(ValidationUtility):
         # cost 3 through open doors
         # cost 2 through closed door
         # cost 1 to destroy
-        expected = 6
+        expected = 12
         result = ValidationUtility.astar_controller.search_path()
         actual = result[len(result) - 1].g  # get the final cost
 
