@@ -23,8 +23,8 @@ class ValidateRouting(ValidationUtility):
 
         self.assertEqual(expected, actual)
 
-    def test_Search_ShouldTakePathOfLeastResistance(self):
-        ValidationUtility.set_up_test_method('least_resistance', Node((2, 0, 0)), Node((0, 0, 0)))
+    def test_LeastResistance_ShouldHaveTwelveEnergyUnits(self):
+        ValidationUtility.set_up_test_method('least_resistance', Node((3, 0, 0)), Node((0, 0, 0)))
 
         # least_resistance.csv has shortest path of cost 11
         # path with least resistance is door (5x2) and open (1x1)
