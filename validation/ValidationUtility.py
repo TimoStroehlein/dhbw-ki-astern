@@ -10,7 +10,7 @@ class ValidationUtility(unittest.TestCase):
     Contains utility needed to set up validation tests.
     """
 
-    astar_controller = None
+    a_star_controller = None
 
     @classmethod
     def set_up_test_method(cls, filename, start_node, dest_node, blaster=12, energy=12):
@@ -18,4 +18,5 @@ class ValidationUtility(unittest.TestCase):
         path = './validation/resources/%s.csv' % filename
         file_controller = FileController()
         links, nodes = file_controller.import_file(path, start_node, dest_node)
-        cls.astar_controller = AStarController(links, nodes, start_node, dest_node, blaster, energy)
+        cls.a_star_controller = AStarController(links, nodes, start_node, dest_node, blaster,
+                                                energy)

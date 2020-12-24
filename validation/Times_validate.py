@@ -19,7 +19,7 @@ class ValidateTimes(ValidationUtility):
         # cost 3 through sentinel hallway
         # cost 1 to destroy
         expected = 12
-        result = ValidationUtility.astar_controller.search_path()
+        result = ValidationUtility.a_star_controller.search_path()
         actual = result[len(result) - 1].g  # get the final cost
 
         self.assertEqual(expected, actual)
@@ -31,7 +31,7 @@ class ValidateTimes(ValidationUtility):
         # door takes 2
         # destroy takes 1
         expected = 2
-        result = ValidationUtility.astar_controller.search_path()
+        result = ValidationUtility.a_star_controller.search_path()
         actual = result[len(result) - 1].regeneration_time  # get the final cost
 
         self.assertEqual(expected, actual)
@@ -43,43 +43,46 @@ class ValidateTimes(ValidationUtility):
         # open takes 1
         # destroy takes 1
         expected = 3
-        result = ValidationUtility.astar_controller.search_path()
+        result = ValidationUtility.a_star_controller.search_path()
         actual = result[len(result) - 1].regeneration_time  # get the final cost
 
         self.assertEqual(expected, actual)
 
     def test_RegenerationLadderUp_ShouldReduceRegenerationTimeByTwo(self):
-        ValidationUtility.set_up_test_method('regeneration_ladder_up', Node((1, 0, -1)), Node((0, 0, 0)))
+        ValidationUtility.set_up_test_method('regeneration_ladder_up', Node((1, 0, -1)),
+                                             Node((0, 0, 0)))
 
         # regeneration time at 5
         # ladder up takes 2
         # destroy takes 1
         expected = 2
-        result = ValidationUtility.astar_controller.search_path()
+        result = ValidationUtility.a_star_controller.search_path()
         actual = result[len(result) - 1].regeneration_time  # get the final cost
 
         self.assertEqual(expected, actual)
 
     def test_RegenerationLadderDown_ShouldReduceRegenerationTimeByPointFive(self):
-        ValidationUtility.set_up_test_method('regeneration_ladder_down', Node((1, 0, 1)), Node((0, 0, 0)))
+        ValidationUtility.set_up_test_method('regeneration_ladder_down', Node((1, 0, 1)),
+                                             Node((0, 0, 0)))
 
         # regeneration time at 5
         # ladder down takes 0.5
         # destroy takes 1
         expected = 3.5
-        result = ValidationUtility.astar_controller.search_path()
+        result = ValidationUtility.a_star_controller.search_path()
         actual = result[len(result) - 1].regeneration_time  # get the final cost
 
         self.assertEqual(expected, actual)
 
     def test_RegenerationBlastWall_ShouldReduceRegenerationTimeByThree(self):
-        ValidationUtility.set_up_test_method('regeneration_blasting', Node((2, 0, 0)), Node((0, 0, 0)))
+        ValidationUtility.set_up_test_method('regeneration_blasting', Node((2, 0, 0)),
+                                             Node((0, 0, 0)))
 
         # regeneration time at 5
         # blast wall takes 3
         # destroy takes 1
         expected = 1
-        result = ValidationUtility.astar_controller.search_path()
+        result = ValidationUtility.a_star_controller.search_path()
         actual = result[len(result) - 1].regeneration_time  # get the final cost
 
         self.assertEqual(expected, actual)
