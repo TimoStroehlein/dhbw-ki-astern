@@ -37,6 +37,12 @@ class Node:
 
     def __lt__(self, other):
         """ Return the lower node, used to sort nodes """
+        if self.f == other.f:
+            tritanium_blaster = self.tritanium_blaster - other.tritanium_blaster
+            energy_units = self.energy_units - other.energy_units
+            # True: Current node has more tritanium blaster and energy units combined
+            # False: Current node hase less tritanium blaster and energy units combined
+            return (tritanium_blaster + energy_units) > 0
         return self.f < other.f
 
     def __str__(self):
