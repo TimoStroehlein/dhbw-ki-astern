@@ -29,16 +29,6 @@ Es können drei verschiedene Log-Level gesetzt werden:
 2. Verbose (`[-v]`): Gibt Info-Nachrichten während des Ablaufs aus
 3. Debug (`[-d]`): Gibt detailierte interne Nachrichten beim Import und Algorithmus aus (Genauer Pfad, Kosten etc.)
 
-### Unit Tests
-
-Unit Tests verifizieren die Funktionstüchtigkeit von Programmteilen. Sie können im Project-Root mit dem Befehl
-
-```shell script
-python -m unittest discover -s ./tests -p "*_test.py" -v
-```
-
-gestartet werden.
-
 ### Validation Tests
 
 Validation Tests validieren die korrekte Arbeitsweise des Algorithmus. Sie können im Project-Root mit dem Befehl
@@ -71,7 +61,6 @@ Geändert:
 
 ### v0.3
 Implementiert:
-- Unit Tests für Algorithmus und Import
 - Validation Tests für Algorithmus
 - Zeitmessung für Algorithmus
 
