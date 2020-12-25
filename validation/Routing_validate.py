@@ -26,7 +26,7 @@ class ValidateRouting(ValidationUtility):
     def test_LeastResistance_ShouldHaveTwelveEnergyUnits(self):
         ValidationUtility.set_up_test_method('least_resistance', Node((3, 0, 0)), Node((0, 0, 0)))
 
-        # least_resistance.csv has shortest path of cost 11
+        # least_resistance.csv has shortest path of cost 13
         # path with least resistance is door (5x2) and open (1x1)
         # path of same length is sentinel(3)-wait(5)-sentinel(3)
         # energy_units should be unchanged because path of least resistance is taken

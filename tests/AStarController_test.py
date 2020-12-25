@@ -1,5 +1,6 @@
-from controller.AStarController import AStartController
+from controller.AStarController import AStarController
 import unittest
+
 
 class TestAStarController(unittest.TestCase):
 

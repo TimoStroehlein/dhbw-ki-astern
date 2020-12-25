@@ -23,20 +23,28 @@ Eine vollständige Übersicht über alle Parameter bietet die Help-Message:
 python main.py -h
 ```
 
-### Log-Level
-
 Es können drei verschiedene Log-Level gesetzt werden:
 
-1. **Silent** (kein Parameter): Keine Ausgabe in der Konsole
-2. **Verbose (-v):** Gibt Info-Nachrichten aus
-3. **Debug (-d):** Gibt detailierte interne Nachrichten beim Import und Algorithmus aus
+1. Silent (kein Parameter): Keine Ausgabe in der Konsole
+2. Verbose (`[-v]`): Gibt Info-Nachrichten während des Ablaufs aus
+3. Debug (`[-d]`): Gibt detailierte interne Nachrichten beim Import und Algorithmus aus (Genauer Pfad, Kosten etc.)
 
-### Unit-Tests
+### Unit Tests
 
-Unit-Tests können im Project-Root mit dem Befehl
+Unit Tests verifizieren die Funktionstüchtigkeit von Programmteilen. Sie können im Project-Root mit dem Befehl
 
 ```shell script
 python -m unittest discover -s ./tests -p "*_test.py" -v
+```
+
+gestartet werden.
+
+### Validation Tests
+
+Validation Tests validieren die korrekte Arbeitsweise des Algorithmus. Sie können im Project-Root mit dem Befehl
+
+```shell script
+python -m unittest discover -s ./validation -p "*_validate.py" -v
 ```
 
 gestartet werden.
@@ -63,7 +71,7 @@ Geändert:
 
 ### v0.3
 Implementiert:
-- Unit-Tests für Algorithmus und Import
+- Unit Tests für Algorithmus und Import
 - Validation Tests für Algorithmus
 - Zeitmessung für Algorithmus
 
