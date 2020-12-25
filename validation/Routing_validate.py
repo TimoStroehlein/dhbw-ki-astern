@@ -43,7 +43,7 @@ class ValidateRouting(ValidationUtility):
 
         self.assertFalse(result)
 
-    def test_LadderUp_ShouldTakeTwo(self):
+    def test_LadderUp_ShouldCostTwo(self):
         ValidationUtility.set_up_test_method('simple_links', Node((0, 0, -1)), Node((0, 0, 0)))
 
         # cost 2 through ladder up
@@ -54,7 +54,7 @@ class ValidateRouting(ValidationUtility):
 
         self.assertEqual(expected, actual)
 
-    def test_LadderDown_ShouldTakePointFive(self):
+    def test_LadderDown_ShouldCostPointFive(self):
         ValidationUtility.set_up_test_method('simple_links', Node((0, 0, 1)), Node((0, 0, 0)))
 
         # cost 0.5 through ladder down
@@ -65,7 +65,7 @@ class ValidateRouting(ValidationUtility):
 
         self.assertEqual(expected, actual)
 
-    def test_Open_ShouldTakeOne(self):
+    def test_Open_ShouldCostOne(self):
         ValidationUtility.set_up_test_method('simple_links', Node((0, 1, 0)), Node((0, 0, 0)))
 
         # cost 1 through open
@@ -76,7 +76,7 @@ class ValidateRouting(ValidationUtility):
 
         self.assertEqual(expected, actual)
 
-    def test_Door_ShouldTakeTwo(self):
+    def test_Door_ShouldCostTwo(self):
         ValidationUtility.set_up_test_method('simple_links', Node((1, 0, 0)), Node((0, 0, 0)))
 
         # cost 2 through door
@@ -87,7 +87,7 @@ class ValidateRouting(ValidationUtility):
 
         self.assertEqual(expected, actual)
 
-    def test_BlastWall_ShouldTakeThree(self):
+    def test_BlastWall_ShouldCostThree(self):
         ValidationUtility.set_up_test_method('blasting', Node((1, 0, 0)), Node((0, 0, 0)))
 
         # cost 3 to blast through wall

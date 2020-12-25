@@ -11,7 +11,7 @@ class ValidateResources(ValidationUtility):
     test_[function to validate]_[Expected result]
     """
 
-    def test_DestroyWithBlaster_ShouldTakeOneMinute(self):
+    def test_DestroyWithBlaster_ShouldCostOne(self):
         ValidationUtility.set_up_test_method('destroy', Node((0, 0, 0)), Node((0, 0, 0)))
 
         expected = 1
@@ -20,7 +20,7 @@ class ValidateResources(ValidationUtility):
 
         self.assertEqual(expected, actual)
 
-    def test_DestroyWithoutBlaster_ShouldTakeFiveMinute(self):
+    def test_DestroyWithoutBlaster_ShouldCostFive(self):
         ValidationUtility.set_up_test_method('destroy', Node((0, 0, 0)), Node((0, 0, 0)), blaster=0)
 
         expected = 5
